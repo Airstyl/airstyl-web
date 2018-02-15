@@ -1,11 +1,11 @@
 import React from 'react';
 
-const $component$ = (props) => {
+const HOC = (props) => {
     return (
         <div>
-
+            {props.children}
         </div>
     );
 };
 
-export default $component$;
+export default HOC;

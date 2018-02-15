@@ -1,11 +1,10 @@
 import React from 'react';
+import Responsive from 'react-responsive';
 
-const $component$ = (props) => {
+const Tablet = (props) => {
     return (
-        <div>
-
-        </div>
+        <Responsive {...props} minWidth={768} maxWidth={991} />
     );
 };
 
-export default $component$;
+export default Tablet;

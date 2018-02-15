@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import Tablet from '../../Responsive/Desktop';
+import Mobile from '../../Responsive/Mobile';
 
-class $component$ extends Component {
+class LoginMobile extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -8,11 +10,29 @@ class $component$ extends Component {
 
     render() {
         return (
-            <div>
+            <Mobile>
+                <div className={"body"}>
+                    <Logo/>
+                    <form className={"form"}>
+                        <Input
+                            placeholder="Username"/>
+                        <Input
+                            placeholder="Password"/>
+                        <label className={"forgot-password"}>
+                            Forgot Password?
+                        </label>
+                    </form>
+                    <Button bsStyle="primary">
+                        Facebook
+                    </Button>
+                    <Button bsStyle="primary">
+                        Instagram
+                    </Button>
 
-            </div>
+                </div>
+            </Mobile>
         )
     };
 }
 
-export default $component$;
+export default LoginMobile;

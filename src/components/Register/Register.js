@@ -44,7 +44,7 @@ class Register extends Component {
                             <Input
                                 style={{marginBottom: '28px'}}
                                 placeholder="Create password"/>
-                            <h5>Date of birth</h5>
+                            <h5 className={"date-of-birth"}>Date of birth</h5>
                             <Calendar/>
                             <Select
                                 name="Gender"

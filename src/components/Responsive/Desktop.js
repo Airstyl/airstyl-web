@@ -1,11 +1,10 @@
 import React from 'react';
+import Responsive from 'react-responsive';
 
-const $component$ = (props) => {
+const Desktop = (props) => {
     return (
-        <div>
-
-        </div>
+        <Responsive {...props} minWidth={992} />
     );
 };
 
-export default $component$;
+export default Desktop;

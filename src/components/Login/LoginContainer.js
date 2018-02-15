@@ -1,6 +1,8 @@
 import React from 'react';
+import Desktop from '../Responsive/Desktop';
+import Mobile from '../Responsive/Mobile';
 
-const $component$ = (props) => {
+const loginContainer = (props) => {
     return (
         <div>
 
@@ -8,4 +10,4 @@ const $component$ = (props) => {
     );
 };
 
-export default $component$;
+export default loginContainer;

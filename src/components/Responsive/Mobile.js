@@ -1,11 +1,10 @@
 import React from 'react';
+import Responsive from 'react-responsive';
 
-const $component$ = (props) => {
+const Mobile = (props) => {
     return (
-        <div>
-
-        </div>
+        <Responsive {...props} maxWidth={767} />
     );
 };
 
-export default $component$;
+export default Mobile;

@@ -21,3 +21,9 @@
     height: 100%;
     min-height: 100vh;
 }
+
+.mainContent-mobile {
+    background-color: #ffffff;
+    height: 100%;
+    min-height: 100vh;
+}
