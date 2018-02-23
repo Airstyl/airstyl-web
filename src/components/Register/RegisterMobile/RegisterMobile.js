@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import Avatar from '../../Image/Avatar/Avatar';
-import TextField from 'material-ui/TextField';
+import MobileInput from '../../Form/Input/InputMobile';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import DatePicker from 'material-ui/DatePicker';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import "./RegisterMobile.css";
@@ -14,27 +11,135 @@ class RegisterMobile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            genders: [
-                <MenuItem value={1} primaryText="Male" />,
-                <MenuItem value={2} primaryText="Female" />
-            ],
-            chosenGenderValue: 1,
-            hairtypes: [
-                <MenuItem value={1} primaryText="Afro" />,
-                <MenuItem value={2} primaryText="Braids" />,
-                <MenuItem value={2} primaryText="Weave" />
-            ],
-            chosenHairTypeValue: 1,
-            cities: [
-                <MenuItem value={1} primaryText="Randburg" />,
-                <MenuItem value={2} primaryText="Sandton" />,
-                <MenuItem value={2} primaryText="Roodepoort" />
-            ],
-            chosenCityValue: 1
+            registerForm: {
+                name: {
+                    elementType: 'text',
+                    elementConfig: {
+                        floatingLabelText: "Name",
+                    },
+                    value: ''
+                },
+                surname: {
+                    elementType: 'text',
+                    elementConfig: {
+                        floatingLabelText: "Surname",
+                    },
+                    value: ''
+                },
+                number: {
+                    elementType: "number",
+                    elementConfig: {
+                        floatingLabelText: "Mobile Number",
+                    },
+                    value: ''
+                },
+                email: {
+                    elementType: 'email',
+                    elementConfig: {
+                        floatingLabelText: "Email",
+                    },
+                    value: ''
+                },
+                password: {
+                    elementType: 'password',
+                    elementConfig: {
+                        floatingLabelText: "Create Password",
+                    },
+                    value: ''
+                },
+                birthdate: {
+                    elementType: 'date',
+                    elementConfig: {
+                        hintText: "Date of birth"
+                    },
+                    value: ''
+                },
+                gender: {
+                    elementType: 'dropdown',
+                    elementConfig: {
+                        floatingLabelText: "Gender",
+                        options: [
+                            {value: "male", displayValue: "Male"},
+                            {value: "female", displayValue: "Female"}
+                        ]
+                    },
+                    value: ''
+                },
+                hairtype: {
+                    elementType: 'dropdown',
+                    elementOptions: {
+                        options: [
+                            {value: 1, displayValue: "Braids"},
+                            {value: 2, displayValue: "Afro"},
+                            {value: 3, displayValue: "Weave"}
+                        ]
+                    },
+                    elementConfig: {
+                        floatingLabelText: "Hair Type",
+                    },
+                    value: 1
+                },
+                city: {
+                    elementType: 'dropdown',
+                    elementOptions: {
+                        options: [
+                            {value: 1, displayValue: "Randburg"},
+                            {value: 2, displayValue: "Sandton"},
+                            {value: 3, displayValue: "Midrand"}
+                        ]
+                    },
+                    elementConfig: {
+                        floatingLabelText: "City",
+                    },
+                    value: 1
+                }
+            }
         };
     }
 
+    inputChangedHandler = (event, inputId) => {
+        const updatedRegisterForm = {
+            ...this.state.registerForm
+        };
+
+        const updatedFormElement = {
+            ...updatedRegisterForm[inputId]
+        };
+
+        updatedFormElement.value = event.target.value;
+        updatedRegisterForm[inputId] = updatedFormElement;
+        this.setState({
+            registerForm: {...updatedRegisterForm}
+        });
+        console.log(event);
+    };
+
     render() {
+        const formElementsArray = [];
+
+        for (let key in this.state.registerForm){
+            formElementsArray.push({
+                id: key,
+                config: this.state.registerForm[key]
+            });
+        }
+
+        let form = (
+            <div className={"register-form-mobile"}>
+                {formElementsArray.map(formElement => (
+                    <MobileInput
+                        key={formElement.key}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        elementOptions={formElement.config.elementOptions}
+                        value={formElement.value}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                    />
+
+                ))}
+            </div>
+        );
+
         return (
             <div>
                 <AppBar
@@ -50,68 +155,7 @@ class RegisterMobile extends Component {
                     </div>
                     <div className={"register-body-mobile"}>
                         <div className={"register-form-mobile"}>
-                            <TextField
-                                floatingLabelText="Name"
-                                floatingLabelFocusStyle={{color: "#2abcbb"}}
-                                errorText="This field is required"
-                                errorStyle={{color: '#eb0356'}}
-                                fullWidth={true}
-                            />
-                            <TextField
-                                floatingLabelText="Surname"
-                                fullWidth={true}
-                            />
-                            <TextField
-                                floatingLabelText="Mobile number"
-                                fullWidth={true}
-                                type={"number"}
-                            />
-                            <TextField
-                                floatingLabelText="Email"
-                                fullWidth={true}
-                                type={"email"}
-                            />
-                            <TextField
-                                floatingLabelText="Create Password"
-                                fullWidth={true}
-                                type={"password"}
-                            />
-                            <DatePicker
-                                hintText="Date Of Birth"
-                                fullWidth={true}
-                                textFieldStyle={{
-                                    fontSize: '14px',
-                                    fontWeight: '300',
-                                    fontStyle: 'normal',
-                                    height: '72px'
-                                }}
-                            />
-                            <SelectField
-                                floatingLabelText="Gender"
-                                fullWidth={true}
-                            >
-                                {this.state.genders}
-                            </SelectField>
-                            <SelectField
-                                floatingLabelText="Hair Types"
-                                fullWidth={true}
-                            >
-                                {this.state.hairtypes}
-                            </SelectField>
-                            <SelectField
-                                floatingLabelText="City"
-                                fullWidth={true}
-                            >
-                                {this.state.cities}
-                            </SelectField>
-                            <TextField
-                                floatingLabelText="Hair Type"
-                                fullWidth={true}
-                            />
-                            <TextField
-                                floatingLabelText="City"
-                                fullWidth={true}
-                            />
+                            {form}
                         </div>
                         <RaisedButton
                             label="JOIN NOW"

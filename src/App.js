@@ -10,18 +10,18 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Desktop>
-          <Layout className="Layout">
-            <Content />
-          </Layout>
-        </Desktop>
-        <Mobile>
-            <MuiThemeProvider>
+        <MuiThemeProvider>
+            <Desktop>
+              <Layout className="Layout">
+                <Content />
+              </Layout>
+            </Desktop>
+            <Mobile>
                 <Layout className="Layout">
                     <Content />
                 </Layout>
-            </MuiThemeProvider>
-        </Mobile>
+            </Mobile>
+        </MuiThemeProvider>
       </div>
     );
   }

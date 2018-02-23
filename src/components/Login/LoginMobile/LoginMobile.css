@@ -1,0 +1,28 @@
+.body {
+    padding: 60px;
+}
+
+.login-form-container-mobile {
+    display: block;
+    margin: 30px auto auto;
+}
+
+.login-forgot-password-mobile {
+    margin-top: 15px;
+}
+
+.login-login-button-mobile {
+    display: block;
+}
+
+.login-social-container-mobile {
+    width: 100%;
+    display: block;
+    margin: 28px auto 20px;
+    text-align: center;
+}
+
+.login-social-button-mobile {
+    margin: 0;
+    width: 100%;
+}
