@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Tablet from '../../Responsive/Desktop';
+import {withRouter} from 'react-router-dom';
 import Mobile from '../../Responsive/Mobile';
 import Logo from '../../Logo/Logo';
 import TextField from 'material-ui/TextField';
@@ -12,6 +12,10 @@ class LoginMobile extends Component {
         super(props);
         this.state = {};
     }
+
+    createAccountHandler = () => {
+        this.props.history.push("/register")
+    };
 
     render() {
         return (
@@ -84,6 +88,7 @@ class LoginMobile extends Component {
                             color: '#ffffff'
                         }}
                         fullWidth={true}
+                        onClick={this.createAccountHandler}
                     />
                 </div>
             </Mobile>
@@ -91,4 +96,4 @@ class LoginMobile extends Component {
     };
 }
 
-export default LoginMobile;
+export default withRouter(LoginMobile);

@@ -57,7 +57,7 @@ class RegisterMobile extends Component {
                 gender: {
                     elementType: 'dropdown',
                     elementConfig: {
-                        floatingLabelText: "Gender",
+                        placeholder: "Gender",
                         options: [
                             {value: "male", displayValue: "Male"},
                             {value: "female", displayValue: "Female"}
@@ -67,29 +67,25 @@ class RegisterMobile extends Component {
                 },
                 hairtype: {
                     elementType: 'dropdown',
-                    elementOptions: {
+                    elementConfig: {
+                        placeholder: "Hair Type",
                         options: [
                             {value: 1, displayValue: "Braids"},
                             {value: 2, displayValue: "Afro"},
                             {value: 3, displayValue: "Weave"}
                         ]
                     },
-                    elementConfig: {
-                        floatingLabelText: "Hair Type",
-                    },
                     value: 1
                 },
                 city: {
                     elementType: 'dropdown',
-                    elementOptions: {
+                    elementConfig: {
+                        placeholder: "City",
                         options: [
                             {value: 1, displayValue: "Randburg"},
                             {value: 2, displayValue: "Sandton"},
                             {value: 3, displayValue: "Midrand"}
                         ]
-                    },
-                    elementConfig: {
-                        floatingLabelText: "City",
                     },
                     value: 1
                 }
@@ -114,6 +110,10 @@ class RegisterMobile extends Component {
         console.log(event);
     };
 
+    backButtonHandler = () => {
+        console.log(this.props);
+    };
+
     render() {
         const formElementsArray = [];
 
@@ -128,14 +128,13 @@ class RegisterMobile extends Component {
             <div className={"register-form-mobile"}>
                 {formElementsArray.map(formElement => (
                     <MobileInput
-                        key={formElement.key}
+                        key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         elementOptions={formElement.config.elementOptions}
                         value={formElement.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                     />
-
                 ))}
             </div>
         );
@@ -143,7 +142,12 @@ class RegisterMobile extends Component {
         return (
             <div>
                 <AppBar
-                    iconElementLeft={<IconButton><ArrowBack /></IconButton>}
+                    iconElementLeft={
+                        <IconButton
+                            onClick={this.backButtonHandler}>
+                            <ArrowBack />
+                        </IconButton>
+                    }
                     title="Create an Account"
                     titleStyle={{
                         fontSize: '18px'

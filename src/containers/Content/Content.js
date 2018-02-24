@@ -1,37 +1,17 @@
 import React, { Component } from 'react';
-import Desktop from '../../components/Responsive/Desktop';
-import Tablet from '../../components/Responsive/Tablet';
-import Mobile from '../../components/Responsive/Mobile';
-import RegisterContainer from '../../components/Register/RegisterContainer';
-import LoginContainer from '../../components/Login/LoginContainer';
-import './Content.css';
+import LoginContainer from '../Login/Login';
+import RegisterContainer from '../Register/Register';
+import {Route, Switch} from 'react-router-dom';
 
 class Content extends Component {
 
     render () {
         return (
             <div>
-                <Desktop>
-                    <div className={"content-container"}>
-                        <h4 className="heading">Create Account</h4>
-                        <div className="mainContent">
-                            <LoginContainer/>
-                        </div>
-                    </div>
-                </Desktop>
-                <Tablet>
-                    <div className={"content-container"}>
-                        <h4 className="heading">Create Account</h4>
-                        <div className="mainContent">
-                            <LoginContainer/>
-                        </div>
-                    </div>
-                </Tablet>
-                <Mobile>
-                    <div className="mainContent-mobile">
-                        <LoginContainer/>
-                    </div>
-                </Mobile>
+                <Switch>
+                    <Route path={"/login"} exact render={LoginContainer} />
+                    <Route path={"/register"} exact render={RegisterContainer} />
+                </Switch>
             </div>
         );
     }

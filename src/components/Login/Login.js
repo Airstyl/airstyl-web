@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {ButtonToolbar, Button, FormControl, FormGroup, ControlLabel} from 'react-bootstrap';
+import {withRouter} from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Input from '../Form/Input/Input';
 import Logo from '../Logo/Logo';
 
@@ -28,7 +29,6 @@ class Login extends Component {
                 },
             }
         };
-        this.inputChangedHandler = this.inputChangedHandler.bind(this)
     }
 
     inputChangedHandler = (event, inputId) => {
@@ -69,6 +69,10 @@ class Login extends Component {
             .catch(error => console.log(error))
     };
 
+    createAccountHandler = () => {
+        this.props.history.push("/register")
+    };
+
     render() {
         const formElementsArray = [];
 
@@ -105,6 +109,15 @@ class Login extends Component {
                     <div className={"login-form"}>
                         <form onSubmit={this.registerHandler}>
                             {form}
+                            <RaisedButton
+                                style={{display: 'block', margin: 'auto'}}
+                                label={"Login"}
+                                labelStyle={{
+                                    textTransform: 'none',
+                                    color: '#2abcbb',
+                                    fontWeight: '600'
+                                }}
+                            />
                         </form>
                     </div>
                     <label className={"forgot-password"}>Forgot Password?</label>
@@ -128,11 +141,18 @@ class Login extends Component {
                             }}
                         />
                     </div>
-
+                    <FlatButton
+                        label={"CREATE AN ACCOUNT"}
+                        labelStyle={{
+                            color: '#ffffff'
+                        }}
+                        fullWidth={true}
+                        onClick={this.createAccountHandler}
+                    />
                 </div>
             </div>
         )
     };
 }
 
-export default Login;
+export default withRouter(Login);

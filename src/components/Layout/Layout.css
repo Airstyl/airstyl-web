@@ -4,14 +4,6 @@
     height: 100%;
 }
 
-.content {
-    margin-left: 20%;
-    min-height: 100vh;
-    width: 80%;
-    height: 100%;
-    background-color: #f1f5f6;
-}
-
 .content-no-sidebar {
     min-height: 100vh;
     width: 100%;

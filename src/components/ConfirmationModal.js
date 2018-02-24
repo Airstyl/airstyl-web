@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/bootstrap.min.css';
 import '../css/global.css';
-import Aux from '../hoc/Aux';
+import Aux from '../hoc/HOC';
 import Backdrop from '../UI/Backdrop/Backdrop';
 
 

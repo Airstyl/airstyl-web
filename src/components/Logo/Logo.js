@@ -6,10 +6,7 @@ const logo = (props) => {
     return (
         <div
             className="logo"
-            style={{
-                backgroundColor: props.backgroundColor
-            }}>
-
+            style={{ backgroundColor: props.backgroundColor }}>
             <img src={LogoImage} alt={"AIRSTYL"}/>
         </div>
     );
