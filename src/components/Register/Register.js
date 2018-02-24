@@ -151,7 +151,7 @@ class Register extends Component {
                 }}>
                 {formElementsArray.map(formElement => (
                     <Input
-                        key={formElement.key}
+                        key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.value}
