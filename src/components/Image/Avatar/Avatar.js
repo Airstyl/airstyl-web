@@ -13,7 +13,6 @@ const avatar = (props) => {
                     <img className="img-circle" src={CameraIcon} />
                 </div>
             </div>
-
         </div>
     );
 };

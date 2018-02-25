@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import Select from 'react-select';
 import {FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
+import FAQ from '../../FAQ/FAQ';
 import 'react-select/dist/react-select.css';
 import '../../../css/bootstrap.min.css';
 import '../../../common/common.css';
@@ -19,7 +20,7 @@ const input = (props) => {
                     controlId={props.id}
                     validationState={props.validationState}
                 >
-                    <ControlLabel>Validation Label</ControlLabel>
+                    <ControlLabel>{props.controlLabel}</ControlLabel>
                     <FormControl
                         type={props.elementType}
                         value={props.value}
@@ -27,33 +28,50 @@ const input = (props) => {
                         {...props.elementConfig}
                     />
                     <FormControl.Feedback />
-                    <HelpBlock>Validation is based on string length.</HelpBlock>
+                    <HelpBlock>{props.validationMessage}</HelpBlock>
                 </FormGroup>
             );
             break;
         case ('textarea'):
             inputElement = (
                 <FormGroup controlId={props.id}>
-                    <ControlLabel>Textarea</ControlLabel>
+                    <ControlLabel>{props.elementConfig.controlLabel}</ControlLabel>
                     <FormControl
                         componentClass="textarea"
                         {...props.elementConfig}
                         value={props.value}
-                        onChange={props.changed}/>
+                        onChange={props.changed}
+                    />
+                    <FormControl.Feedback />
+                    <HelpBlock>{props.elementConfig.validationMessage}</HelpBlock>
                 </FormGroup>
+            );
+            break;
+        case ('faq'):
+            inputElement =(
+                <div>
+                    {props.elementConfig.questions.map(question => (
+                        <FAQ
+                            mode={"input"}
+                            heading={question.heading}
+                            question={question.question}
+                        />
+                    ))}
+                </div>
             );
             break;
         case ('date'):
             inputElement = (
-                <Calendar />
+                <Calendar DateTimeFormat={"dd-MM-YYYY"}/>
             );
             break;
         case ('dropdown'):
             inputElement = (
                 <Select
                     value={props.elementConfig.value}
+                    options={props.elementConfig.options}
+                    onChange={props.dropdownChanged}
                     {...props.elementConfig}
-                    {...props.elementOptions}
                 />
             );
             break;

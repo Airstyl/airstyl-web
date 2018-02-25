@@ -12,43 +12,52 @@ class Register extends Component {
             registerForm: {
                 name: {
                     elementType: 'text',
+                    validationState: null,
+                    validationMessage: '',
                     elementConfig: {
                         value: '',
-                        placeholder: "Name",
+                        placeholder: "Name"
                     }
                 },
                 surname: {
                     elementType: 'text',
+                    validationState: null,
+                    validationMessage: '',
                     elementConfig: {
                         value: '',
-                        placeholder: "Surname",
+                        placeholder: "Surname"
                     }
                 },
                 mobile: {
                     elementType: "number",
+                    validationState: null,
+                    validationMessage: '',
                     elementConfig: {
                         value: '',
-                        placeholder: "Mobile Number",
+                        placeholder: "Mobile Number"
                     }
                 },
                 email: {
                     elementType: 'email',
+                    validationState: null,
                     elementConfig: {
                         value: '',
-                        placeholder: "Email",
+                        placeholder: "Email"
                     }
                 },
                 password: {
                     elementType: 'password',
+                    validationState: null,
+                    validationMessage: '',
                     elementConfig: {
                         value: '',
-                        placeholder: "Create Password",
+                        placeholder: "Create Password"
                     }
                 },
                 birthdate: {
                     elementType: 'date',
                     elementConfig: {
-                        value: '',
+                        value: ''
                     }
                 },
                 gender: {
@@ -71,7 +80,8 @@ class Register extends Component {
                             {value: 1, label: "Braids"},
                             {value: 2, label: "Afro"},
                             {value: 3, label: "Weave"}
-                        ]
+                        ],
+                        multi: true
                     }
                 },
                 city: {
@@ -83,16 +93,14 @@ class Register extends Component {
                             {value: 1, label: "Randburg"},
                             {value: 2, label: "Sandton"},
                             {value: 3, label: "Midrand"}
-                        ]
+                        ],
+                        multi: true
                     }
                 }
             },
             loading: false
         };
-        this.inputChangedHandler = this.inputChangedHandler.bind(this);
-        this.registerHandler = this.registerHandler.bind(this);
     }
-
 
     inputChangedHandler = (event, inputId) => {
         const updatedRegisterForm = {
@@ -104,12 +112,53 @@ class Register extends Component {
         };
 
         updatedFormElement.elementConfig.value = event.target.value;
+
+        updatedFormElement.validationState = this.validateInput(updatedFormElement.elementType, event.target.value);
+
         updatedRegisterForm[inputId] = updatedFormElement;
         this.setState({
             registerForm: {...updatedRegisterForm}
         });
+    };
 
-        console.log(`Changed: ${event.target.value}`);
+    validateInput = (elementType, value) => {
+        if (elementType === 'email') {
+            return this.validateEmail(value);
+        }
+        return null;
+    };
+
+    validateEmail = (value) => {
+        if (!value.includes("@"))  {
+            return 'error';
+        }
+        if (!value.includes(".")) {
+            return 'error';
+        }
+        return 'success';
+    };
+
+    dropDownChangedHandler = (value, inputId) => {
+        const updatedRegisterForm = {
+            ...this.state.registerForm
+        };
+
+        const updatedFormElement = {
+            ...updatedRegisterForm[inputId]
+        };
+
+        if (value === null) {
+            updatedFormElement.elementConfig.value = '';
+        }
+        else {
+            updatedFormElement.elementConfig.value = value;
+            console.log(value);
+        }
+
+        updatedRegisterForm[inputId] = updatedFormElement;
+        this.setState({
+            registerForm: {...updatedRegisterForm}
+        });
     };
 
     registerHandler = (event) => {
@@ -156,6 +205,9 @@ class Register extends Component {
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                        dropdownChanged={(value) => this.dropDownChangedHandler(value, formElement.id)}
+                        validationState={formElement.config.validationState}
+                        validationMessage={formElement.config.validationMessage}
                     />
                 ))}
             </div>
@@ -163,19 +215,19 @@ class Register extends Component {
 
         return (
             <div>
-                <div className={"body"} >
+                <div className={"register-container"} >
                     <div className={"avatar-wrapper"}>
                         <Avatar />
                     </div>
-                    <div className={"form-wrapper"}>
+                    <div className={"register-form-container"}>
                         <form onSubmit={this.registerHandler}>
                             {form}
+                            <Button
+                                style={{marginBottom: '18px'}}
+                                block
+                                text={"JOIN NOW"}
+                                onClick={this.registerHandler}/>
                         </form>
-                        <Button
-                            style={{marginBottom: '18px'}}
-                            block
-                            text={"JOIN NOW"}
-                            onClick={this.registerHandler}/>
                     </div>
                 </div>
             </div>

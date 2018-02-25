@@ -17,7 +17,7 @@ class Login extends Component {
                     elementType: 'text',
                     elementConfig: {
                         value: '',
-                        placeholder: "User Name"
+                        placeholder: "User Name",
                     }
                 },
                 password: {
@@ -46,7 +46,7 @@ class Login extends Component {
             loginForm: {...updatedLoginForm}
         });
 
-        console.log(`Changed: ${event.target.value}`);
+        console.log(`Changed: ${event}`);
     };
 
     loginHandler = (event) => {
@@ -63,10 +63,11 @@ class Login extends Component {
                 formData
             }
         };
+        this.props.history.replace("/appointments");
 
-        axios.post('/login.json', loginData)
-            .then(response => console.log(response))
-            .catch(error => console.log(error))
+        // axios.post('/login.json', loginData)
+        //     .then(response => console.log(response))
+        //     .catch(error => console.log(error))
     };
 
     createAccountHandler = () => {
@@ -120,7 +121,23 @@ class Login extends Component {
                             />
                         </form>
                     </div>
-                    <label className={"forgot-password"}>Forgot Password?</label>
+                    <FlatButton
+                        label={"Forgot Password?"}
+                        style={{
+                            display: 'block',
+                            width: '35%',
+                            margin: '0 auto',
+                            textAlign: 'right',
+                        }}
+                        labelStyle={{
+                            textTransform: 'none',
+                            color: '#f1f5f6',
+                            padding: 0,
+                            fontSize: '12px',
+                        }}
+                        hoverColor={"#00000000"}
+                        onClick={this.createAccountHandler}
+                    />
                     <div className={"login-social-container"}>
                         <RaisedButton
                             style={{float: 'left'}}
@@ -142,11 +159,18 @@ class Login extends Component {
                         />
                     </div>
                     <FlatButton
+                        style={{
+                            display: 'block',
+                            margin: 'auto',
+                            width: '100%'
+                        }}
+                        hoverColor={"#00000000"}
                         label={"CREATE AN ACCOUNT"}
                         labelStyle={{
-                            color: '#ffffff'
+                            color: '#ffffff',
+                            fontSize: '12px',
+                            fontWeight: '600'
                         }}
-                        fullWidth={true}
                         onClick={this.createAccountHandler}
                     />
                 </div>

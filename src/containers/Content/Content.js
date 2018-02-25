@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import LoginContainer from '../Login/Login';
 import RegisterContainer from '../Register/Register';
+import Dashboard from '../Dashboard/Dashboard';
 import {Route, Switch} from 'react-router-dom';
+import EditProfile from "../EditProfile/EditProfile";
+
 
 class Content extends Component {
 

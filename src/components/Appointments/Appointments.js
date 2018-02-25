@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Appointment from './Appointment/Appointment';
-import ConfirmationModal from '../ConfirmationModal';
+import ConfirmationModal from '../Popup/Popup';
+import './Appointments.css';
 
 class Appointments extends Component {
     constructor(props) {
@@ -22,17 +23,21 @@ class Appointments extends Component {
         };
     }
 
+    openModalHandler = () => {
+        this.setState({showModal: true})
+    };
+
     closeModalHandler =() => {
         this.setState({showModal: false})
     };
 
     render() {
         return (
-            <div>
+            <div className={"appointments-page-container"}>
                 <ConfirmationModal show={this.state.showModal} modalClosed={this.closeModalHandler}/>
                 {this.state.appointments.map((appointmentDay) => (
                     <div>
-                        <p className="date">{appointmentDay.date}</p>
+                        <p className="appointments-date">{appointmentDay.date}</p>
                         {appointmentDay.day.map((appointment) => (
                             <Appointment
                                 timeRange={appointment.startDateTime + ' - ' + appointment.endDateTime}
@@ -40,8 +45,6 @@ class Appointments extends Component {
                                 appointmentDetail={appointment.detail}/>
                         ))}
                     </div>
-
-
                 ))}
             </div>
         )

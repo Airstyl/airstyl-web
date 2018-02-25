@@ -1,17 +1,12 @@
-.body {
-
+.register-container {
+    padding: 60px 160px 100px;
 }
 
-.avatar-wrapper {
-
-}
-
-.form-wrapper {
+.register-form-container {
     display: block;
     margin: 50px auto;
     width: 50%;
 }
-
 
 h5 .date-of-birth {
     font-size: 12px;

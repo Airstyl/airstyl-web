@@ -14,22 +14,6 @@
 .login-social-container {
     width: 35%;
     display: block;
-    margin: 28px auto 20px;
+    margin: 28px auto 0;
     text-align: center;
-}
-
-
-.forgot-password {
-    display: block;
-    margin: 0 auto;
-    width: 35%;
-    font-size: 12px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #f1f5f6;
-    text-align: right;
-
 }
