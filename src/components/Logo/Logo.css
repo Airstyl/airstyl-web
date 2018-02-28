@@ -1,13 +1,5 @@
 .logo {
-    height: 100px;
-    padding: 15px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
-
-.logo img {
-    margin: auto;
-    height: 60px;
-    display: block;
 }

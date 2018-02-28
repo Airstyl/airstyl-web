@@ -5,91 +5,14 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import profilePic from '../../../assets/images/elliot.jpg';
 import "./RegisterMobile.css";
 
 class RegisterMobile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            registerForm: {
-                name: {
-                    elementType: 'text',
-                    elementConfig: {
-                        floatingLabelText: "Name",
-                    },
-                    value: ''
-                },
-                surname: {
-                    elementType: 'text',
-                    elementConfig: {
-                        floatingLabelText: "Surname",
-                    },
-                    value: ''
-                },
-                number: {
-                    elementType: "number",
-                    elementConfig: {
-                        floatingLabelText: "Mobile Number",
-                    },
-                    value: ''
-                },
-                email: {
-                    elementType: 'email',
-                    elementConfig: {
-                        floatingLabelText: "Email",
-                    },
-                    value: ''
-                },
-                password: {
-                    elementType: 'password',
-                    elementConfig: {
-                        floatingLabelText: "Create Password",
-                    },
-                    value: ''
-                },
-                birthdate: {
-                    elementType: 'date',
-                    elementConfig: {
-                        hintText: "Date of birth"
-                    },
-                    value: ''
-                },
-                gender: {
-                    elementType: 'dropdown',
-                    elementConfig: {
-                        placeholder: "Gender",
-                        options: [
-                            {value: "male", displayValue: "Male"},
-                            {value: "female", displayValue: "Female"}
-                        ]
-                    },
-                    value: ''
-                },
-                hairtype: {
-                    elementType: 'dropdown',
-                    elementConfig: {
-                        placeholder: "Hair Type",
-                        options: [
-                            {value: 1, displayValue: "Braids"},
-                            {value: 2, displayValue: "Afro"},
-                            {value: 3, displayValue: "Weave"}
-                        ]
-                    },
-                    value: 1
-                },
-                city: {
-                    elementType: 'dropdown',
-                    elementConfig: {
-                        placeholder: "City",
-                        options: [
-                            {value: 1, displayValue: "Randburg"},
-                            {value: 2, displayValue: "Sandton"},
-                            {value: 3, displayValue: "Midrand"}
-                        ]
-                    },
-                    value: 1
-                }
-            }
+            registerForm: props.form
         };
     }
 
@@ -155,8 +78,9 @@ class RegisterMobile extends Component {
                 />
                 <div className={"container"} >
                     <div className={"avatar-wrapper-mobile"}>
-                        <Avatar />
+                        <Avatar image={profilePic}/>
                     </div>
+
                     <div className={"register-body-mobile"}>
                         <div className={"register-form-mobile"}>
                             {form}

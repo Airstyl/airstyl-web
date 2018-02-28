@@ -1,110 +1,39 @@
 import React, {Component} from 'react';
-import Button from '../Button/Button';
-import Avatar from '../Image/Avatar/Avatar';
+import {Row, Col, Button, Modal} from 'react-bootstrap';
+import {RaisedButton} from 'material-ui';
+
+import Phones from '../../assets/images/register/phones.png';
+import techNvest from '../../assets/images/register/technvst.png';
+import gse from '../../assets/images/register/gse-logo.png';
+import telkom from '../../assets/images/register/telkom.png';
+import Logo from '../Logo/Logo';
 import Input from '../Form/Input/Input';
+import Backdrop from "../../UI/Backdrop/Backdrop";
+
+
 import "./Register.css";
 import axios from '../../axios-register';
+import afro from '../../assets/images/elliot.jpg';
+import Desktop from "../Responsive/Desktop";
 
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            registerForm: {
-                name: {
-                    elementType: 'text',
-                    validationState: null,
-                    validationMessage: '',
-                    elementConfig: {
-                        value: '',
-                        placeholder: "Name"
-                    }
-                },
-                surname: {
-                    elementType: 'text',
-                    validationState: null,
-                    validationMessage: '',
-                    elementConfig: {
-                        value: '',
-                        placeholder: "Surname"
-                    }
-                },
-                mobile: {
-                    elementType: "number",
-                    validationState: null,
-                    validationMessage: '',
-                    elementConfig: {
-                        value: '',
-                        placeholder: "Mobile Number"
-                    }
-                },
-                email: {
-                    elementType: 'email',
-                    validationState: null,
-                    elementConfig: {
-                        value: '',
-                        placeholder: "Email"
-                    }
-                },
-                password: {
-                    elementType: 'password',
-                    validationState: null,
-                    validationMessage: '',
-                    elementConfig: {
-                        value: '',
-                        placeholder: "Create Password"
-                    }
-                },
-                birthdate: {
-                    elementType: 'date',
-                    elementConfig: {
-                        value: ''
-                    }
-                },
-                gender: {
-                    elementType: 'dropdown',
-                    elementConfig: {
-                        value: 'male',
-                        placeholder: "Gender",
-                        options: [
-                            {value: "male", label: "Male"},
-                            {value: "female", label: "Female"}
-                        ]
-                    }
-                },
-                hairtype: {
-                    elementType: 'dropdown',
-                    elementConfig: {
-                        value: 1,
-                        placeholder: "Hair Type",
-                        options: [
-                            {value: 1, label: "Braids"},
-                            {value: 2, label: "Afro"},
-                            {value: 3, label: "Weave"}
-                        ],
-                        multi: true
-                    }
-                },
-                city: {
-                    elementType: 'dropdown',
-                    elementConfig: {
-                        value: 2,
-                        placeholder: "City",
-                        options: [
-                            {value: 1, label: "Randburg"},
-                            {value: 2, label: "Sandton"},
-                            {value: 3, label: "Midrand"}
-                        ],
-                        multi: true
-                    }
-                }
-            },
+            showModal: false,
             loading: false
         };
     }
 
+    componentDidMount() {
+        // axios.get('/Cities')
+        //     .then(response => console.log(response))
+        //     .catch(error => console.log(error))
+    }
+
     inputChangedHandler = (event, inputId) => {
         const updatedRegisterForm = {
-            ...this.state.registerForm
+            ...this.props.registerForm
         };
 
         const updatedFormElement = {
@@ -113,19 +42,51 @@ class Register extends Component {
 
         updatedFormElement.elementConfig.value = event.target.value;
 
-        updatedFormElement.validationState = this.validateInput(updatedFormElement.elementType, event.target.value);
+        updatedFormElement.elementValidation.validationState = this.validateInput(updatedFormElement.elementValidation.rules, updatedFormElement.elementConfig.value);
 
         updatedRegisterForm[inputId] = updatedFormElement;
-        this.setState({
-            registerForm: {...updatedRegisterForm}
-        });
+        this.props.updateRegisterForm({...updatedRegisterForm});
     };
 
-    validateInput = (elementType, value) => {
-        if (elementType === 'email') {
-            return this.validateEmail(value);
+    valueChangedHandler = (value, inputId) => {
+        const updatedRegisterForm = {
+            ...this.props.registerForm
+        };
+
+        const updatedFormElement = {
+            ...updatedRegisterForm[inputId]
+        };
+
+        if (value === null || value.length === 0) {
+            updatedFormElement.elementConfig.value = '';
+            updatedFormElement.elementValidation.validationState = null;
         }
-        return null;
+        else {
+            updatedFormElement.elementConfig.value = value;
+            updatedFormElement.elementValidation.validationState = 'success';
+        }
+
+        updatedRegisterForm[inputId] = updatedFormElement;
+        this.props.updateRegisterForm({...updatedRegisterForm});
+    };
+
+    formIsValid = () => {
+        for (let key in this.props.registerForm){
+            if (this.props.registerForm[key].elementValidation.validationState !== 'success') {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    validateInput = (rules, value) => {
+        if (value === null) return null;
+        if (rules.minLength){
+            if (value.length < rules.minLength) return 'warning';
+        }
+        if (rules.email) return this.validateEmail(value);
+
+        return 'success';
     };
 
     validateEmail = (value) => {
@@ -138,58 +99,99 @@ class Register extends Component {
         return 'success';
     };
 
-    dropDownChangedHandler = (value, inputId) => {
-        const updatedRegisterForm = {
-            ...this.state.registerForm
-        };
-
-        const updatedFormElement = {
-            ...updatedRegisterForm[inputId]
-        };
-
-        if (value === null) {
-            updatedFormElement.elementConfig.value = '';
-        }
-        else {
-            updatedFormElement.elementConfig.value = value;
-            console.log(value);
-        }
-
-        updatedRegisterForm[inputId] = updatedFormElement;
-        this.setState({
-            registerForm: {...updatedRegisterForm}
-        });
-    };
-
     registerHandler = (event) => {
         event.preventDefault();
         this.setState({ loading: true });
 
         const formData ={};
-        for (let formElementId in this.state.registerForm) {
-            formData[formElementId] = this.state.registerForm[formElementId].value;
+        for (let formElementId in this.props.registerForm) {
+            formData[formElementId] = this.props.registerForm[formElementId].value;
         }
 
         const registerData = {
             user: {
-                formData
+                ACC_STATUS: 'Active',
+                email : 'xolani@airstyl.com',
+                firstname: 'Xolani',
+                password : 'abc123',
+                username: 'XK'
             }
         };
 
-        axios.post('/users.json', registerData)
+        axios.post('/users/register', registerData.user)
             .then(response => console.log(response))
             .catch(error => console.log(error))
+    };
+
+    modalClosedHandler = () => {
+        this.setState({
+            showModal: false
+        });
+    };
+
+    signUpClickHandler = () => {
+        this.setState({
+            showModal: true
+        });
     };
 
     render() {
         const formElementsArray = [];
 
-        for (let key in this.state.registerForm){
+        for (let key in this.props.registerForm){
             formElementsArray.push({
                 id: key,
-                config: this.state.registerForm[key]
+                config: this.props.registerForm[key]
             });
         }
+
+        let index = (
+            <Row className={"register-index"} style={{paddingTop: '40px'}}>
+                <Col lg={4} lgOffset={2} md={4} mdOffset={2}>
+                    <Logo id={"logo"}/>
+                    <h3>We're launching soon</h3>
+                    <h5>Find and book quality stylists.</h5>
+                    <hr/>
+                    <p>
+                        Be the first to hear the news when our app drops!
+                        Sign up now and get R50 off your first purchase when we launch.
+                    </p>
+                    <div className={"sign-up-container"}>
+                        <RaisedButton
+                            id={"sign-up"}
+                            style={{
+                                marginAbove: '20px'
+                            }}
+                            buttonStyle={{
+                                width: '200px',
+                                height: '50px',
+                                paddingBelow: '20px',
+                                paddingAbove: '20px',
+                            }}
+                            labelStyle={{
+                                margin: 'auto',
+                                display: 'block',
+                                fontSize: '16px',
+                                fontWeight: '500',
+                                fontStyle: 'normal',
+                                fontStretch: 'normal',
+                                lineHeight: '1.63',
+                                letterSpacing: 'normal',
+                                textAlign: 'center',
+                                color: '#ffffff',
+                            }}
+                            label="Sign up"
+                            secondary={true}
+                            onClick={this.signUpClickHandler}
+                        />
+                    </div>
+
+                    <img id={"phones"} src={Phones} />
+
+                </Col>
+
+            </Row>
+        );
 
         let form = (
             <div
@@ -205,35 +207,67 @@ class Register extends Component {
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                        dropdownChanged={(value) => this.dropDownChangedHandler(value, formElement.id)}
-                        validationState={formElement.config.validationState}
-                        validationMessage={formElement.config.validationMessage}
+                        valueChanged={(value) => this.valueChangedHandler(value, formElement.id)}
+                        validationState={formElement.config.elementValidation.validationState}
+                        validationMessage={formElement.config.elementValidation.validationMessage}
                     />
                 ))}
             </div>
         );
 
-        return (
-            <div>
-                <div className={"register-container"} >
-                    <div className={"avatar-wrapper"}>
-                        <Avatar />
-                    </div>
-                    <div className={"register-form-container"}>
-                        <form onSubmit={this.registerHandler}>
+        const formModal = (
+            <div style={{backgroundColor: '#127b7a'}}>
+                <Modal show={this.state.showModal} onHide={this.modalClosedHandler} backdrop={"static"}>
+                    <Modal.Header closeButton />
+                    <Modal.Body>
+                        <div>
                             {form}
                             <Button
                                 style={{marginBottom: '18px'}}
                                 block
                                 text={"JOIN NOW"}
+                                // disabled={!this.formIsValid()}
                                 onClick={this.registerHandler}/>
-                        </form>
-                    </div>
+                        </div>
+
+                    </Modal.Body>
+                </Modal>
+            </div>
+        );
+
+        return (
+            <div>
+                {formModal}
+                {this.state.showForm ? form : index}
+                <div id={"footer"}>
+                    <Row>
+                        <Col lg={2} lgOffset={2} md={2} mdOffset={2}>
+                            <p>&copy; 2018 Airstyl, All Rights Reserved</p>
+                        </Col>
+                        <Col lg={8} md={8}>
+                            <img src={gse} />
+                            <img src={techNvest} />
+                            <img src={telkom} />
+                        </Col>
+                    </Row>
                 </div>
+
+
+                {/*<div className={"register-container"} >*/}
+                    {/*<div className={"register-form-container"}>*/}
+                        {/*<form onSubmit={this.registerHandler}>*/}
+                            {/*<Button*/}
+                                {/*style={{marginBottom: '18px'}}*/}
+                                {/*block*/}
+                                {/*text={"JOIN NOW"}*/}
+                                {/*// disabled={!this.formIsValid()}*/}
+                                {/*onClick={this.registerHandler}/>*/}
+                        {/*</form>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
             </div>
         );
     }
-
 }
 
 export default Register;
