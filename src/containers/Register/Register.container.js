@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions/actions';
+import * as actions from '../../store/actions/index';
 
 import MinWidthTablet from '../../components/Responsive/MinWidthTablet';
 import Mobile from '../../components/Responsive/Mobile';
@@ -24,6 +25,7 @@ class RegisterContainer extends Component {
                         <Register
                             registerForm={this.props.registerForm}
                             updateRegisterForm={this.props.onUpdateRegisterForm}
+                            submitRegisterForm={this.props.onInitAuthentication}
                         />
                     </div>
                 </MinWidthTablet>
@@ -48,8 +50,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onUpdateRegisterForm: (registerForm) => dispatch({type: actionTypes.UPDATE_REGISTER_FORM, payload: registerForm})
-    };
+        onUpdateRegisterForm: (registerForm) => dispatch({type: actionTypes.UPDATE_REGISTER_FORM, payload: registerForm}),
+        onInitAuthentication: (firstname, lastname, email, password, username) => dispatch(actions.Auth(firstname, lastname, email, password, username))
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);

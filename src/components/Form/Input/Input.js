@@ -1,10 +1,12 @@
 import React from 'react';
-import Calendar from 'react-calendar';
+import DatePicker from 'material-ui/DatePicker';
 import Select from 'react-select';
 import Location from 'react-place';
 import {FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap';
 import FAQ from '../../FAQ/FAQ';
 import 'react-select/dist/react-select.css';
+
+import './Input.css';
 
 const input = (props) => {
     let inputElement = null;
@@ -58,15 +60,10 @@ const input = (props) => {
                 <div
                 style={{
                     margin: '0 auto 20px',
-                    padding: '0 25px',
-                    display: 'block'
                 }}>
-                    <Calendar
-                        style={{
-                            margin: '0 auto',
-                            display: 'block',
-                        }}
-                        onChange={props.valueChanged}
+                    <DatePicker
+                        onChange={(event) => console.log(event)}
+                        floatingLabelText={props.elementConfig.floatingLabelText}
                     />
                 </div>
 
@@ -93,10 +90,9 @@ const input = (props) => {
                 <div>
                     <Location
                         country='ZA'
-                        value={props.elementConfig.value}
                         noMatching='Sorry, I can not find {{value}}.'
-                        onLocationSet={ props.changed}
-                        inputProps={{ ...props.elementConfig }}
+                        onLocationSet={props.valueChanged}
+                        inputProps={{...props.elementConfig.config}}
                     />
                 </div>
             );

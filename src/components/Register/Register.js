@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col, Button, Modal} from 'react-bootstrap';
-import {RaisedButton} from 'material-ui';
+import {FontIcon, RaisedButton} from 'material-ui';
 
 import Phones from '../../assets/images/register/phones.png';
 import techNvest from '../../assets/images/register/technvst.png';
@@ -8,13 +8,9 @@ import gse from '../../assets/images/register/gse-logo.png';
 import telkom from '../../assets/images/register/telkom.png';
 import Logo from '../Logo/Logo';
 import Input from '../Form/Input/Input';
-import Backdrop from "../../UI/Backdrop/Backdrop";
 
 
 import "./Register.css";
-import axios from '../../axios-register';
-import afro from '../../assets/images/elliot.jpg';
-import Desktop from "../Responsive/Desktop";
 
 class Register extends Component {
     constructor(props) {
@@ -49,6 +45,7 @@ class Register extends Component {
     };
 
     valueChangedHandler = (value, inputId) => {
+        console.log(value);
         const updatedRegisterForm = {
             ...this.props.registerForm
         };
@@ -99,7 +96,7 @@ class Register extends Component {
         return 'success';
     };
 
-    registerHandler = (event) => {
+    registerClickHandler = (event) => {
         event.preventDefault();
         this.setState({ loading: true });
 
@@ -108,19 +105,13 @@ class Register extends Component {
             formData[formElementId] = this.props.registerForm[formElementId].value;
         }
 
-        const registerData = {
-            user: {
-                ACC_STATUS: 'Active',
-                email : 'xolani@airstyl.com',
-                firstname: 'Xolani',
-                password : 'abc123',
-                username: 'XK'
-            }
-        };
+        const firstname = this.props.registerForm.fullname.elementConfig.value.split(' ')[0];
+        const lastname = this.props.registerForm.fullname.elementConfig.value.split(' ')[1];
+        const email = this.props.registerForm.mobileOrEmail.elementConfig.value;
+        const password = this.props.registerForm.password.elementConfig.value;
+        const username = this.props.registerForm.username.elementConfig.value;
 
-        axios.post('/users/register', registerData.user)
-            .then(response => console.log(response))
-            .catch(error => console.log(error))
+        this.props.submitRegisterForm(firstname, lastname, email, password, username);
     };
 
     modalClosedHandler = () => {
@@ -147,7 +138,7 @@ class Register extends Component {
 
         let index = (
             <Row className={"register-index"} style={{paddingTop: '40px'}}>
-                <Col lg={4} lgOffset={2} md={4} mdOffset={2}>
+                <Col lg={3} lgOffset={2} md={3} mdOffset={2}>
                     <Logo id={"logo"}/>
                     <h3>We're launching soon</h3>
                     <h5>Find and book quality stylists.</h5>
@@ -159,37 +150,15 @@ class Register extends Component {
                     <div className={"sign-up-container"}>
                         <RaisedButton
                             id={"sign-up"}
-                            style={{
-                                marginAbove: '20px'
-                            }}
-                            buttonStyle={{
-                                width: '200px',
-                                height: '50px',
-                                paddingBelow: '20px',
-                                paddingAbove: '20px',
-                            }}
-                            labelStyle={{
-                                margin: 'auto',
-                                display: 'block',
-                                fontSize: '16px',
-                                fontWeight: '500',
-                                fontStyle: 'normal',
-                                fontStretch: 'normal',
-                                lineHeight: '1.63',
-                                letterSpacing: 'normal',
-                                textAlign: 'center',
-                                color: '#ffffff',
-                            }}
+                            buttonStyle={{paddingTop: '12px'}}
+                            style={{width: '200px', height: '50px'}}
                             label="Sign up"
                             secondary={true}
                             onClick={this.signUpClickHandler}
                         />
                     </div>
-
                     <img id={"phones"} src={Phones} />
-
                 </Col>
-
             </Row>
         );
 
@@ -216,23 +185,43 @@ class Register extends Component {
         );
 
         const formModal = (
-            <div style={{backgroundColor: '#127b7a'}}>
                 <Modal show={this.state.showModal} onHide={this.modalClosedHandler} backdrop={"static"}>
                     <Modal.Header closeButton />
                     <Modal.Body>
                         <div>
+                            <p>
+                                Sign up to be the first in the line to get the app
+                                and get R50 off your first purchase when we launch.
+                            </p>
                             {form}
-                            <Button
-                                style={{marginBottom: '18px'}}
-                                block
-                                text={"JOIN NOW"}
-                                // disabled={!this.formIsValid()}
-                                onClick={this.registerHandler}/>
+                            <Button block onClick={this.registerClickHandler}>SIGN UP</Button>
                         </div>
-
                     </Modal.Body>
+                    <Modal.Footer>
+                        <div>
+                            <p style={{textAlign: 'center'}}>OR</p>
+                            <RaisedButton
+                                // href="https://github.com/callemall/material-ui"
+                                backgroundColor={"#3B5998"}
+                                fullWidth
+                                target="_blank"
+                                label="Login with Facebook"
+                                style={{marginBottom: '10px', color: '#ffffff'}}
+                                icon={<i style={{color: '#ffffff'}} className="fab fa-facebook-f fa-2x" />}
+                            />
+                            <p style={{textAlign: 'center'}}>OR</p>
+                            <RaisedButton
+                                // href="https://github.com/callemall/material-ui"
+                                backgroundColor={"#1DA1F2"}
+                                fullWidth
+                                target="_blank"
+                                label="Login with Twitter"
+                                style={{marginBottom: '10px', color: '#ffffff'}}
+                                icon={<i style={{color: '#ffffff'}} className="fab fa-twitter fa-2x" />}
+                            />
+                        </div>
+                    </Modal.Footer>
                 </Modal>
-            </div>
         );
 
         return (
@@ -251,20 +240,6 @@ class Register extends Component {
                         </Col>
                     </Row>
                 </div>
-
-
-                {/*<div className={"register-container"} >*/}
-                    {/*<div className={"register-form-container"}>*/}
-                        {/*<form onSubmit={this.registerHandler}>*/}
-                            {/*<Button*/}
-                                {/*style={{marginBottom: '18px'}}*/}
-                                {/*block*/}
-                                {/*text={"JOIN NOW"}*/}
-                                {/*// disabled={!this.formIsValid()}*/}
-                                {/*onClick={this.registerHandler}/>*/}
-                        {/*</form>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
             </div>
         );
     }
