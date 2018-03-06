@@ -1,100 +1,244 @@
 import React, {Component} from 'react';
-import Avatar from '../../Image/Avatar/Avatar';
-import MobileInput from '../../Form/Input/InputMobile';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
-import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import profilePic from '../../../assets/images/elliot.jpg';
+import {withRouter} from 'react-router-dom';
+import {CircularProgress, Dialog, FlatButton} from "material-ui";
+import {Alert} from "react-bootstrap";
+import validator from 'validator';
+
+import Logo from '../../Logo/Logo';
+import MobileInput from '../../Form/Input/InputMobile';
 import "./RegisterMobile.css";
 
 class RegisterMobile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            registerForm: props.form
-        };
-    }
-
     inputChangedHandler = (event, inputId) => {
         const updatedRegisterForm = {
-            ...this.state.registerForm
+            ...this.props.registerForm
         };
 
         const updatedFormElement = {
             ...updatedRegisterForm[inputId]
         };
 
-        updatedFormElement.value = event.target.value;
+        updatedFormElement.elementConfigMobile.value = event.target.value;
+
+        updatedFormElement.elementValidation.validationState = this.validateInput(updatedFormElement.elementValidation.rules, updatedFormElement.elementConfigMobile.value);
+
         updatedRegisterForm[inputId] = updatedFormElement;
-        this.setState({
-            registerForm: {...updatedRegisterForm}
-        });
-        console.log(event);
+        this.props.updateRegisterForm({...updatedRegisterForm});
     };
 
-    backButtonHandler = () => {
-        console.log(this.props);
+    valueChangedHandler = (value, inputId) => {
+        const updatedRegisterForm = {
+            ...this.props.registerForm
+        };
+
+        const updatedFormElement = {
+            ...updatedRegisterForm[inputId]
+        };
+
+        if (value === null || value.length === 0) {
+            updatedFormElement.elementConfigMobile.value = '';
+            updatedFormElement.elementValidation.validationState = null;
+        }
+        else {
+            updatedFormElement.elementConfigMobile.value = value;
+            updatedFormElement.elementValidation.validationState = 'success';
+        }
+
+        updatedRegisterForm[inputId] = updatedFormElement;
+        this.props.updateRegisterForm({...updatedRegisterForm});
+    };
+
+    textFieldChangedHandler = (event, value, inputId) => {
+        const updatedRegisterForm = {
+            ...this.props.registerForm
+        };
+
+        const updatedFormElement = {
+            ...updatedRegisterForm[inputId]
+        };
+
+        updatedFormElement.elementConfigMobile.value = value;
+
+        updatedFormElement.elementValidation.validationMessage = this.validateInput(updatedFormElement.elementValidation.rules, updatedFormElement.elementConfigMobile.value);
+
+        updatedFormElement.elementValidation.validationState = this.valueIsValid(updatedFormElement);
+
+        updatedRegisterForm[inputId] = updatedFormElement;
+        this.props.updateRegisterForm({...updatedRegisterForm});
+    };
+
+    valueIsValid = (updatedFormElement) => {
+        if (updatedFormElement.elementConfigMobile.value.length === 0){
+            return false;
+        }
+        else if (updatedFormElement.elementValidation.validationMessage !== null)
+        {
+            return false;
+        }
+        else if (updatedFormElement.elementValidation.validationMessage === null && updatedFormElement.elementConfigMobile.value.length > 0){
+            return true
+        }
+    };
+
+    formIsInvalid = () => {
+        let invalid = false;
+        for (let key in this.props.registerForm){
+            if (!this.props.registerForm[key].elementValidation.validationState) {
+                invalid = true;
+            }
+        }
+        return invalid;
+    };
+
+    validateInput = (rules, value) => {
+        if (!value) return null;
+        if (rules.minLength)
+            if (value.length < rules.minLength)
+                return `Please enter ${rules.minLength} or more characters`;
+        if (rules.minWords) {
+            for (let i=0; i < rules.minWords; i++) {
+                if (!value.split(' ')[i])
+                    return `Please enter ${rules.minWords} or more words`;
+            }
+        }
+        if (rules.email)
+            if (!validator.isEmail(value))
+                return 'Please enter a valid email';
+
+        return null;
+    };
+
+    disableButton = () => {
+        if (this.props.loading) return true;
+        return this.formIsInvalid();
+    };
+
+    registerClickHandler = (event) => {
+        event.preventDefault();
+        this.props.updateError({state: false, message: ''});
+
+        const formData ={};
+        for (let formElementId in this.props.registerForm) {
+            formData[formElementId] = this.props.registerForm[formElementId].value;
+        }
+
+        const firstname = this.props.registerForm.fullname.elementConfigMobile.value.split(' ')[0];
+        const lastname = this.props.registerForm.fullname.elementConfigMobile.value.split(' ')[1];
+        const email = this.props.registerForm.mobileOrEmail.elementConfigMobile.value;
+        const password = this.props.registerForm.password.elementConfigMobile.value;
+        const username = this.props.registerForm.username.elementConfigMobile.value;
+
+        this.props.submitRegisterForm(firstname, lastname, email, password, username);
+    };
+
+    closeError = () => {
+        this.props.updateError({state: false, message: ''});
+    };
+
+    resetPage = () => {
+        this.props.resetPage();
     };
 
     render() {
+        const errorButton = [
+            <FlatButton
+                label="OK"
+                primary={true}
+                onClick={this.closeError}
+            />,
+        ];
+
         const formElementsArray = [];
 
-        for (let key in this.state.registerForm){
+        for (let key in this.props.registerForm){
             formElementsArray.push({
                 id: key,
-                config: this.state.registerForm[key]
+                config: this.props.registerForm[key]
             });
         }
 
         let form = (
-            <div className={"register-form-mobile"}>
+            <div>
                 {formElementsArray.map(formElement => (
                     <MobileInput
                         key={formElement.id}
                         elementType={formElement.config.elementType}
-                        elementConfig={formElement.config.elementConfig}
+                        elementConfig={formElement.config.elementConfigMobile}
                         elementOptions={formElement.config.elementOptions}
                         value={formElement.value}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                        textFieldChanged={(event, value) => this.textFieldChangedHandler(event, value, formElement.id)}
+                        inputChanged={(event) => this.inputChangedHandler(event, formElement.id)}
+                        valueChanged={(value) => this.valueChangedHandler(value, formElement.id)}
+                        validationState={formElement.config.elementValidation.validationState}
+                        validationMessage={formElement.config.elementValidation.validationMessage}
                     />
                 ))}
             </div>
         );
 
+        let error = (
+            <Dialog
+                title={"Registration Error"}
+                modal={false}
+                open={this.props.error.state}
+                actions={errorButton}
+            >
+                {this.props.error.message}
+            </Dialog>
+        );
+
+        let loading = (
+            <Dialog
+                modal={false}
+                open={this.props.loading}
+            >
+                <CircularProgress style={{display: 'block', margin: 'auto'}}/>
+            </Dialog>
+        );
+
+        let confirmationEmailModal = (
+            <div style={{
+                minHeight: '100%',
+                backgroundColor: '#2abcbb',
+                zIndex: '1500'
+            }}>
+                <div style={{display: 'block', float: 'right'}}>&times;</div>
+            </div>
+        );
+
+
+
         return (
             <div>
-                <AppBar
-                    iconElementLeft={
-                        <IconButton
-                            onClick={this.backButtonHandler}>
-                            <ArrowBack />
-                        </IconButton>
-                    }
-                    title="Create an Account"
-                    titleStyle={{
-                        fontSize: '18px'
-                    }}
-                />
+                {confirmationEmailModal}
+                {loading}
+                {error}
                 <div className={"container"} >
-                    <div className={"avatar-wrapper-mobile"}>
-                        <Avatar image={profilePic}/>
-                    </div>
-
                     <div className={"register-body-mobile"}>
+                        <Logo id={"register-logo"}/>
                         <div className={"register-form-mobile"}>
                             {form}
                         </div>
-                        <RaisedButton
-                            label="JOIN NOW"
-                            primary={true}
-                            fullWidth={true}
-                            disabled
-                            buttonStyle={{
-                                margin: '36px auto 20px',
-                                height: '48px'
-                            }}
-                        />
+                        <div id={"register-submit-mobile"}>
+                            <RaisedButton
+                                backgroundColor={"#2abcbb"}
+                                disabledBackgroundColor={"#2abcbb"}
+                                label="JOIN NOW"
+                                primary
+                                fullWidth
+                                disabled={this.disableButton()}
+                                style={{
+                                    height: '36px',
+                                    borderStyle: '5px'
+                                }}
+                                labelStyle={{
+                                    margin: '7px 0',
+                                    display: 'block'
+                                }}
+                                onClick={this.registerClickHandler}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,4 +246,4 @@ class RegisterMobile extends Component {
     };
 }
 
-export default RegisterMobile;
+export default withRouter(RegisterMobile);

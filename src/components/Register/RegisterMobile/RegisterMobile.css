@@ -1,33 +1,56 @@
 .register-body-mobile {
     margin: 0 auto;
-    padding: 0 16px;
+    padding: 60px 42px 20px;
+}
+
+.spinner-modal .modal-backdrop {
+    background-color: #ffffff;
+    opacity: 1;
+}
+
+.spinner-modal .modal-dialog {
+    height: 100%;
+}
+
+.spinner-modal .modal-content {
+    height: 100%;
+
+}
+
+.spinner-modal .modal-body {
+    height: 100%;
+}
+
+.spinner-modal .sweet-loading {
+    height: 100%;
+}
+
+.spinner-modal .ring-loader {
+    margin: 80% auto;
+}
+
+#register-logo img{
+    width: 100%;
 }
 
 .register-form-mobile {
-    margin: 0 auto;
-    padding: 0 24px;
+    margin: 15% auto 0;
 }
 
-.avatar-wrapper-mobile {
-    margin-bottom: 8px;
-    margin-top: 24px;
+#register-submit-mobile {
+    margin: 10% 0 0
 }
 
-.form-wrapper {
+#register-login-mobile {
+    text-align: center;
 }
 
-.calendar {
-    display: block;
-    margin: 0 auto;
+#register-login-mobile a {
+    color: #ffffff;
+    text-decoration: none;
 }
 
-h5 {
-    font-size: 12px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.3;
-    letter-spacing: normal;
-    color: #f1f5f6;
-    margin-bottom: 15px;
+#register-login-mobile a:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }

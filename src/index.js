@@ -9,11 +9,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 import registerReducer from './store/reducers/register.reducer';
-import userReducer from './store/reducers/user.reducer';
+import loginReducer from './store/reducers/login.reducer';
 
 const rootReducer = combineReducers({
     register: registerReducer,
-    user: userReducer,
+    login: loginReducer,
 
 });
 
@@ -21,9 +21,7 @@ const rootReducer = combineReducers({
 const logger = store => {
     return next => {
         return action => {
-            console.log('[Middleware] Dispatching: ', action);
             const result = next(action);
-            console.log('[Middleware] next state: ', store.getState());
             return result;
         }
     }

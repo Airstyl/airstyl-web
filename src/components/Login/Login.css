@@ -1,8 +1,19 @@
 .login-body {
-    background-color: #2abcbb;
     min-height: 100vh;
     height: 100%;
     padding: 100px 400px;
+}
+
+.login-body .logo {
+    text-align: center;
+    height: 100px;
+    margin-bottom: 100px
+}
+
+.login-body img {
+    display: block;
+    margin: 0 auto;
+    height: 100%;
 }
 
 .login-form {

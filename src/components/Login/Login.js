@@ -6,7 +6,6 @@ import Input from '../Form/Input/Input';
 import Logo from '../Logo/Logo';
 
 import './Login.css';
-import axios from "../../axios-register";
 
 class Login extends Component {
     constructor(props) {
@@ -64,14 +63,14 @@ class Login extends Component {
             }
         };
         this.props.history.replace("/appointments");
-
-        // axios.post('/login.json', loginData)
-        //     .then(response => console.log(response))
-        //     .catch(error => console.log(error))
     };
 
     createAccountHandler = () => {
         this.props.history.push("/register")
+    };
+
+    goToAppointments = () => {
+        this.props.history.replace("/appointments");
     };
 
     render() {
@@ -106,7 +105,7 @@ class Login extends Component {
         return (
             <div>
                 <div className={"login-body"}>
-                    <Logo/>
+                    <Logo />
                     <div className={"login-form"}>
                         <form onSubmit={this.registerHandler}>
                             {form}

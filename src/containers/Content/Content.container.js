@@ -12,8 +12,7 @@ class Content extends Component {
         return (
             <div>
                 <Switch>
-                    <Route path={"/login"} exact render={() => <LoginContainer/>} />
-                    <Route path={"/register"} exact render={() => <RegisterContainer/>} />
+                    <Route path={"/"} exact render={() => <RegisterContainer/>} />
                 </Switch>
             </div>
         );

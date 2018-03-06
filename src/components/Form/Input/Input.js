@@ -20,6 +20,7 @@ const input = (props) => {
                 <FormGroup
                     controlId={props.key}
                     validationState={props.validationState}
+
                 >
                     <FormControl
                         type={props.elementType}
@@ -27,6 +28,8 @@ const input = (props) => {
                         onChange={props.changed}
                         {...props.elementConfig}
                     />
+                    <FormControl.Feedback />
+                    <HelpBlock>{props.validationMessage}</HelpBlock>
                 </FormGroup>
             );
             break;

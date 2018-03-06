@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Appointment from './Appointment/Appointment';
-import ConfirmationModal from '../Popup/Popup';
 import './Appointments.css';
 
 class Appointments extends Component {
@@ -34,7 +33,6 @@ class Appointments extends Component {
     render() {
         return (
             <div className={"appointments-page-container"}>
-                <ConfirmationModal show={this.state.showModal} modalClosed={this.closeModalHandler}/>
                 {this.state.appointments.map((appointmentDay) => (
                     <div>
                         <p className="appointments-date">{appointmentDay.date}</p>

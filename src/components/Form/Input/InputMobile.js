@@ -14,8 +14,9 @@ const inputMobile = (props) => {
                 <TextField
                     type={props.elementType}
                     value={props.value}
+                    errorText={props.validationMessage}
                     fullWidth={true}
-                    onChange={props.changed}
+                    onChange={props.textFieldChanged}
                     {...props.elementConfig}
                 />
             );

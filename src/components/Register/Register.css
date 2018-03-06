@@ -1,34 +1,68 @@
-@font-face {
-    font-family: savoye;
-    src: url(../../assets/fonts/Savoye.ttf);
+.alert {
+    text-align: center;
 }
 
 #logo img {
     height: 60px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-.modal-dialog {
+#form-modal .modal-dialog {
     width: 400px !important;
+    text-align: center;
 }
 
-.modal-body p {
-    font-weight: 600;
-    line-height: 20px;
-    font-size: 17px;
-    margin: 0 40px 10px;
+#form-modal img {
+    height: 60px;
 }
 
-.modal-footer button div {
-    color: #ffffff;
+#form-modal .modal-body hr {
+    width: 40%;
+    display: inline-block;
 }
 
+#form-modal .modal-body span {
+    display: inline-block;
+}
 
-.register-index h3 {
+#form-modal .modal-footer button span {
+    color: #2aabd2;
+}
+
+#form-modal .modal-footer button span:hover {
+    color: #2aabd2;
+}
+
+#form-modal .modal-footer button:hover {
+    background-color: #00000000 !important;
+    text-decoration: #2aabd2 underline !important;
+}
+
+#confirmation-email-modal .modal-dialog{
+    width: 50%;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+#confirmation-email-modal img {
+    height: 60px;
+}
+
+#confirmation-email-modal h4{
+    width: 100%;
+    font-size: 36px;
+
+}
+
+#confirmation-email-modal p {
+    font-size: 16px;
+}
+
+#register-index h3 {
     width: 100%;
     height: 26px;
-    font-family: savoye;
-    font-size: 36px;
+    font-family: Tangerine;
+    font-size: 48px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -37,8 +71,8 @@
     color: #ffffff;
 }
 
-.register-index h5 {
-    font-family: Roboto;
+#register-index h5 {
+    font-family: R;
     font-size: 16px;
     font-weight: 300;
     font-style: normal;
@@ -48,16 +82,17 @@
     color: #32ceca;
 }
 
-.register-index hr {
+#register-index hr {
     width: 20%;
     color: #ffffff;
     margin-left: 0;
 }
 
-.register-index p {
+#register-index p {
     margin-bottom: 10px;
+    padding-right: 250px;
     font-family: Roboto;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     font-style: normal;
     font-stretch: normal;
@@ -66,48 +101,23 @@
     color: #ffffff;
 }
 
-.sign-up-container{
+#sign-up-container{
     margin: 20px 0 40px;
+    width: 100%;
+    height: 50px;
 }
 
-.sign-up {
-    display: block;
-    width: 200px;
-    height: 50px;
-    font-size: 16px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.63;
-    letter-spacing: normal;
-    text-align: center;
-    color: #ffffff;
+#sign-up-container .btn-toolbar {
+    height: 60px;
+}
+
+#sign-up-container button {
+    height: 100%;
 }
 
 #phones {
-    height: 400px;
+    height: 375px;
     display: block;
-}
-
-#slider {
-    background-color: black;
-    width: 100%;
-    background-size: 100%;
-    background: url(../../assets/images/register/footer.png) no-repeat center center fixed;
-    background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    -webkit-background-size: cover;
-    height:75px;   /* Height of the footer */
-    -webkit-transition: height 1s, visibility 1s;
-    transition: height 1s, visibility 1s;
-}
-
-#slider-content {
-    position:absolute;
-    top:0;
-    opacity:1;
-    transition: opacity 1s, visibility 2s, display 2s;
 }
 
 #footer {
@@ -122,24 +132,7 @@
 }
 
 #footer img {
-    height: 60px;
+    height: 80px;
     display: inline-block;
     margin-left: 75px;
-}
-
-.register-form-container {
-    display: block;
-    margin: 50px auto;
-    width: 50%;
-}
-
-h5 .date-of-birth {
-    font-size: 12px;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.3;
-    letter-spacing: normal;
-    color: #535353;
-    margin-bottom: 15px;
 }

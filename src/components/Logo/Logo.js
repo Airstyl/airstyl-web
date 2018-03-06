@@ -15,13 +15,13 @@ const logo = (props) => {
             {...props}
             style={{ backgroundColor: props.backgroundColor }}>
             <Desktop>
-                <img src={DesktopLogo} alt={"AIRSTYL"}/>
+                <img src={DesktopLogo} alt={"AIRSTYL"} {...props.imageProps}/>
             </Desktop>
             <Tablet>
-                <img src={TabletLogo} alt={"AIRSTYL"}/>
+                <img src={TabletLogo} alt={"AIRSTYL"} {...props.imageProps}/>
             </Tablet>
             <Mobile>
-                <img src={MobileLogo} alt={"AIRSTYL"}/>
+                <img src={DesktopLogo} alt={"AIRSTYL"} {...props.imageProps}/>
             </Mobile>
         </div>
     );

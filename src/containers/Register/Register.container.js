@@ -8,7 +8,6 @@ import Mobile from '../../components/Responsive/Mobile';
 import Register from '../../components/Register/Register';
 import RegisterMobile from '../../components/Register/RegisterMobile/RegisterMobile';
 
-import backgroundImage from '../../assets/images/register/background.png';
 import './Register.container.css';
 
 class RegisterContainer extends Component {
@@ -24,16 +23,32 @@ class RegisterContainer extends Component {
                     <div className={"register-background"}>
                         <Register
                             registerForm={this.props.registerForm}
+                            showFormModal={this.props.showFormModal}
+                            showEmailConfirmationModal={this.props.showEmailConfirmationModal}
+                            loading={this.props.loading}
+                            error={this.props.error}
+                            updateError={this.props.onUpdateError}
                             updateRegisterForm={this.props.onUpdateRegisterForm}
+                            updateShowFormModal={this.props.onUpdateShowFormModal}
+                            updateShowEmailConfirmationModal={this.props.onUpdateShowEmailConfirmationModal}
                             submitRegisterForm={this.props.onInitAuthentication}
+                            resetPage={this.props.resetPage}
                         />
                     </div>
                 </MinWidthTablet>
                 <Mobile>
-                    <main className="layout-no-sidebar">
+                    <main className="register-background-mobile">
                         <RegisterMobile
                             registerForm={this.props.registerForm}
+                            showFormModal={this.props.showFormModal}
+                            showEmailConfirmationModal={this.props.showEmailConfirmationModal}
+                            loading={this.props.loading}
+                            error={this.props.error}
+                            updateError={this.props.onUpdateError}
                             updateRegisterForm={this.props.onUpdateRegisterForm}
+                            updateShowEmailConfirmationModal={this.props.onUpdateShowEmailConfirmationModal}
+                            submitRegisterForm={this.props.onInitAuthentication}
+                            resetPage={this.props.resetPage}
                         />
                     </main>
                 </Mobile>
@@ -44,14 +59,22 @@ class RegisterContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        registerForm: state.register.registerForm
+        registerForm: state.register.registerForm,
+        showFormModal: state.register.showFormModal,
+        showEmailConfirmationModal: state.register.showEmailConfirmationModal,
+        loading: state.register.loading,
+        error: state.register.error,
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         onUpdateRegisterForm: (registerForm) => dispatch({type: actionTypes.UPDATE_REGISTER_FORM, payload: registerForm}),
-        onInitAuthentication: (firstname, lastname, email, password, username) => dispatch(actions.Auth(firstname, lastname, email, password, username))
+        onUpdateShowFormModal: (showFormModal) => dispatch({type: actionTypes.UPDATE_SHOW_FORM_MODAL, payload: showFormModal}),
+        onUpdateShowEmailConfirmationModal: (showEmailConfirmationModal) => dispatch({type: actionTypes.UPDATE_SHOW_EMAIL_CONFIRMATION_MODAL, payload: showEmailConfirmationModal}),
+        onInitAuthentication: (firstname, lastname, email, password, username) => dispatch(actions.Auth(firstname, lastname, email, password, username)),
+        onUpdateError: (error) => dispatch({type: actionTypes.UPDATE_ERROR, payload: error}),
+        resetPage: () => dispatch({type: actionTypes.RESET_PAGE})
     }
 };
 

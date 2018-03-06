@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
-import {Row, Col, Button, Modal} from 'react-bootstrap';
-import {FontIcon, RaisedButton} from 'material-ui';
+import {Row, Col, Modal, ButtonToolbar, Alert} from 'react-bootstrap';
+import {FlatButton, RaisedButton} from 'material-ui';
+import {withRouter} from 'react-router-dom';
+import validator from 'validator';
 
+import launchingSoon from '../../assets/images/register/launching_soon.png';
+import findAndBook from '../../assets/images/register/find_and_book.png';
 import Phones from '../../assets/images/register/phones.png';
-import techNvest from '../../assets/images/register/technvst.png';
+import techNvest from '../../assets/images/register/technvst_mobile.png';
 import gse from '../../assets/images/register/gse-logo.png';
 import telkom from '../../assets/images/register/telkom.png';
 import Logo from '../Logo/Logo';
+import Button from '../Button/Button';
 import Input from '../Form/Input/Input';
-
+import Spinner from '../Spinner/Spinner';
 
 import "./Register.css";
 
@@ -16,8 +21,7 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false,
-            loading: false
+            signUpType: 'email'
         };
     }
 
@@ -39,6 +43,10 @@ class Register extends Component {
         updatedFormElement.elementConfig.value = event.target.value;
 
         updatedFormElement.elementValidation.validationState = this.validateInput(updatedFormElement.elementValidation.rules, updatedFormElement.elementConfig.value);
+
+        if (updatedFormElement.elementValidation.validationState!== 'success' || updatedFormElement.elementValidation.validationState !== null) {
+            updatedFormElement.elementValidation.validationMessage = this.getValidationMessage(updatedFormElement.elementValidation.rules, updatedFormElement.elementConfig.value);
+        }
 
         updatedRegisterForm[inputId] = updatedFormElement;
         this.props.updateRegisterForm({...updatedRegisterForm});
@@ -67,13 +75,14 @@ class Register extends Component {
         this.props.updateRegisterForm({...updatedRegisterForm});
     };
 
-    formIsValid = () => {
+    formIsInvalid = () => {
+        let invalid = false;
         for (let key in this.props.registerForm){
             if (this.props.registerForm[key].elementValidation.validationState !== 'success') {
-                return false;
+                invalid = true;
             }
         }
-        return true;
+        return invalid;
     };
 
     validateInput = (rules, value) => {
@@ -81,24 +90,79 @@ class Register extends Component {
         if (rules.minLength){
             if (value.length < rules.minLength) return 'warning';
         }
+        if (rules.minWords) {
+            for (let i=0; i < rules.minWords; i++) {
+                if (!value.split(' ')[i]) {
+                    return 'warning';
+                }
+            }
+        }
         if (rules.email) return this.validateEmail(value);
 
         return 'success';
     };
 
     validateEmail = (value) => {
-        if (!value.includes("@"))  {
-            return 'error';
+        if (validator.isEmail(value))  {
+            return 'success';
         }
-        if (!value.includes(".")) {
-            return 'error';
+        return 'warning';
+    };
+
+    getValidationMessage= (rules, value) => {
+        if (value === null) return '';
+        if (rules.minLength){
+            if (value.length < rules.minLength)
+                return `Please enter ${rules.minLength} or more characters`;
         }
-        return 'success';
+        if (rules.minWords) {
+            for (let i=0; i < rules.minWords; i++) {
+                if (!value.split(' ')[i])
+                    return `Please enter ${rules.minWords} or more words`;
+            }
+        }
+        if (rules.email)
+            if (!validator.isEmail(value)) return "Please enter a valid email address";
+
+        return '';
+    };
+
+    showFormModal = () => {
+        this.props.updateShowFormModal(true);
+    };
+
+    hideFormModal = () => {
+        this.props.updateShowFormModal(false);
+    };
+
+    showEmailConfirmationModal = () => {
+        this.props.updateShowEmailConfirmationModal(true);
+    };
+
+    hideEmailConfirmationModal = () => {
+        this.props.updateShowEmailConfirmationModal(false);
+    };
+
+    disableButton = () => {
+        if (this.props.loading) return true;
+        return this.formIsInvalid();
+    };
+
+    changeSignUpToEmail = () => {
+        this.setState({
+            signUpType: 'email'
+        })
+    };
+
+    changeSignUpToSocialMedia = () => {
+        this.setState({
+            signUpType: 'social'
+        })
     };
 
     registerClickHandler = (event) => {
         event.preventDefault();
-        this.setState({ loading: true });
+        this.props.updateError({state: false, message: ''});
 
         const formData ={};
         for (let formElementId in this.props.registerForm) {
@@ -114,16 +178,10 @@ class Register extends Component {
         this.props.submitRegisterForm(firstname, lastname, email, password, username);
     };
 
-    modalClosedHandler = () => {
-        this.setState({
-            showModal: false
-        });
-    };
-
-    signUpClickHandler = () => {
-        this.setState({
-            showModal: true
-        });
+    resetPage = () => {
+        this.hideFormModal();
+        this.hideEmailConfirmationModal();
+        this.props.resetPage();
     };
 
     render() {
@@ -137,25 +195,44 @@ class Register extends Component {
         }
 
         let index = (
-            <Row className={"register-index"} style={{paddingTop: '40px'}}>
-                <Col lg={3} lgOffset={2} md={3} mdOffset={2}>
+            <Row id={"register-index"} style={{paddingTop: '40px'}}>
+                <Col lg={5} lgOffset={2} md={5} mdOffset={2}>
                     <Logo id={"logo"}/>
-                    <h3>We're launching soon</h3>
-                    <h5>Find and book quality stylists.</h5>
+                    <img src={launchingSoon} style={{height: '50px', display: 'block'}}/>
+                    <img src={findAndBook} style={{height: '25px', display: 'block'}}/>
                     <hr/>
                     <p>
                         Be the first to hear the news when our app drops!
                         Sign up now and get R50 off your first purchase when we launch.
                     </p>
-                    <div className={"sign-up-container"}>
-                        <RaisedButton
-                            id={"sign-up"}
-                            buttonStyle={{paddingTop: '12px'}}
-                            style={{width: '200px', height: '50px'}}
-                            label="Sign up"
-                            secondary={true}
-                            onClick={this.signUpClickHandler}
-                        />
+                    <div id={"sign-up-container"}>
+                        <ButtonToolbar>
+                            <Button
+                                onClick={this.showFormModal}
+                                style={{
+                                    backgroundColor: '#2abcbb',
+                                    width: '180px',
+                                    height: '100%',
+                                    float: 'left',
+                                    fontSize: '14px',
+                                    marginRight: '15px',
+                                    fontWeight: 'bold'
+                                }}>
+                                TO FIND A STYLIST <br/> SIGN UP
+                            </Button>
+                            <Button
+                                onClick={this.showFormModal}
+                                style={{
+                                    backgroundColor: '#d8245e',
+                                    width: '180px',
+                                    height: '100%',
+                                    float: 'right',
+                                    fontSize: '14px',
+                                    fontWeight: 'bold'
+                                }}>
+                                TO BE A STYLIST <br/> SIGN UP
+                            </Button>
+                        </ButtonToolbar>
                     </div>
                     <img id={"phones"} src={Phones} />
                 </Col>
@@ -174,6 +251,7 @@ class Register extends Component {
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
+                        elementOptions={formElement.config.elementOptions}
                         value={formElement.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         valueChanged={(value) => this.valueChangedHandler(value, formElement.id)}
@@ -184,59 +262,122 @@ class Register extends Component {
             </div>
         );
 
+        const errorAlert = (
+            <Alert bsStyle="danger" style={{margin: '15px 0'}}>
+                {this.props.error.message}
+            </Alert>
+        );
+
+        const emailSignUp = (
+            <div>
+                {form}
+                {this.props.loading ? <Spinner color={"#127b7a"}/> : null}
+                {this.props.error.state ? errorAlert : null}
+                <RaisedButton
+                    onClick={this.registerClickHandler}
+                    disabled={this.disableButton()}
+                    backgroundColor={"#2abcbb"}
+                    label="Join Now"
+                    labelColor={"#ffffff"}
+                    labelStyle={{textTransform: 'normal'}}
+                    fullWidth
+                    style={{marginBottom: '10px'}}
+                />
+            </div>
+        );
+
+        const socialMediaSignUp = (
+            <div>
+                <RaisedButton
+                    backgroundColor={"#3B5998"}
+                    fullWidth
+                    label="Sign up using Facebook"
+                    labelColor={"#ffffff"}
+                    labelStyle={{textTransform: 'normal'}}
+                    style={{marginBottom: '20px'}}
+                    icon={<i style={{color: '#ffffff'}} className="fab fa-facebook-f fa-2x" />}
+                />
+                <RaisedButton
+                    backgroundColor={"#1DA1F2"}
+                    fullWidth
+                    label="Sign up using Twitter"
+                    labelColor={"#ffffff"}
+                    labelStyle={{textTransform: 'normal'}}
+                    style={{marginBottom: '20px'}}
+                    icon={<i style={{color: '#ffffff'}} className="fab fa-twitter fa-2x" />}
+                />
+            </div>
+        );
+
         const formModal = (
-                <Modal show={this.state.showModal} onHide={this.modalClosedHandler} backdrop={"static"}>
-                    <Modal.Header closeButton />
-                    <Modal.Body>
-                        <div>
-                            <p>
-                                Sign up to be the first in the line to get the app
-                                and get R50 off your first purchase when we launch.
-                            </p>
-                            {form}
-                            <Button block onClick={this.registerClickHandler}>SIGN UP</Button>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <div>
-                            <p style={{textAlign: 'center'}}>OR</p>
-                            <RaisedButton
-                                // href="https://github.com/callemall/material-ui"
-                                backgroundColor={"#3B5998"}
-                                fullWidth
-                                target="_blank"
-                                label="Login with Facebook"
-                                style={{marginBottom: '10px', color: '#ffffff'}}
-                                icon={<i style={{color: '#ffffff'}} className="fab fa-facebook-f fa-2x" />}
-                            />
-                            <p style={{textAlign: 'center'}}>OR</p>
-                            <RaisedButton
-                                // href="https://github.com/callemall/material-ui"
-                                backgroundColor={"#1DA1F2"}
-                                fullWidth
-                                target="_blank"
-                                label="Login with Twitter"
-                                style={{marginBottom: '10px', color: '#ffffff'}}
-                                icon={<i style={{color: '#ffffff'}} className="fab fa-twitter fa-2x" />}
-                            />
-                        </div>
-                    </Modal.Footer>
-                </Modal>
+            <Modal id={"form-modal"} show={this.props.showFormModal} onHide={this.hideFormModal} backdrop={"static"}>
+                <Modal.Header closeButton style={{backgroundColor: '#2abcbb'}}>
+                    <Logo/>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>
+                        Sign up to be the first in the line to get the app
+                        and get R50 off your first purchase when we launch.
+                    </p>
+                    {this.state.signUpType === 'email' ? emailSignUp : socialMediaSignUp}
+                </Modal.Body>
+                <Modal.Footer>
+                    {this.state.signUpType === 'email' ?
+                        (<FlatButton
+                            onClick={this.changeSignUpToSocialMedia}
+                            fullWidth
+                            label="Sign up with social media"
+                            labelStyle={{textTransform: 'normal', fontSize: '13px'}}
+                        />) :
+                        (<FlatButton
+                            onClick={this.changeSignUpToEmail}
+                            fullWidth
+                            label="Sign up with email"
+                            labelStyle={{textTransform: 'normal', fontSize: '13px'}}
+                        />)
+                    }
+                </Modal.Footer>
+            </Modal>
+        );
+
+        const confirmationEmailModal = (
+            <Modal id={"confirmation-email-modal"} show={this.props.showEmailConfirmationModal} onHide={this.resetPage} backdrop={"static"}>
+                <Modal.Header closeButton style={{backgroundColor: '#2abcbb'}}>
+                    <Logo/>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Thank you for registering!</h4>
+                    <br />
+                    <p>
+                        A confirmation email has been sent to your registered email address for activation.
+                        If you haven't received it yet, click the button below to resend the activation email.
+                    </p>
+                    <RaisedButton
+                        backgroundColor={"#2abcbb"}
+                        label="Resend activation email"
+                        labelColor={"#ffffff"}
+                        labelStyle={{textTransform: 'normal'}}
+                        style={{marginTop: '20px'}}
+                    />
+                </Modal.Body>
+            </Modal>
         );
 
         return (
             <div>
+                {confirmationEmailModal}
                 {formModal}
-                {this.state.showForm ? form : index}
+                {index}
+                <div style={{height: '60px', width: '100%'}} />
                 <div id={"footer"}>
                     <Row>
-                        <Col lg={2} lgOffset={2} md={2} mdOffset={2}>
-                            <p>&copy; 2018 Airstyl, All Rights Reserved</p>
-                        </Col>
-                        <Col lg={8} md={8}>
+                        <Col lg={9} lgOffset={1} md={9} mdOffset={1}>
                             <img src={gse} />
-                            <img src={techNvest} />
+                            <img src={techNvest} style={{height: '40px'}}/>
                             <img src={telkom} />
+                        </Col>
+                        <Col lg={2} md={2} >
+                            <p>&copy; 2018 Airstyl, All Rights Reserved</p>
                         </Col>
                     </Row>
                 </div>
@@ -245,4 +386,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default withRouter(Register);

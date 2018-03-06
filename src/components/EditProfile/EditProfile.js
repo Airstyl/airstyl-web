@@ -3,9 +3,6 @@ import Label from '../Form/Label/Label';
 import Input from '../Form/Input/Input';
 import ServiceImages from '../Image/ServiceImages/ServiceImages';
 import './EditProfile.css';
-import afro from '../../assets/images/afro.png';
-import afro1 from '../../assets/images/afro2.png';
-import braid from '../../assets/images/braid.png';
 
 class EditProfile extends Component {
     constructor(props) {
@@ -114,11 +111,6 @@ class EditProfile extends Component {
                 <Label
                     style={{marginBottom: '20px'}}
                     labelText={"Please insert 3 cover images to promote your services "}/>
-                <ServiceImages
-                    style={{marginBottom: '36px'}}
-                    className="row margin-bottom-36"
-                    image1={afro}
-                    image2={afro1}/>
                 {form}
                 <button
                     className="btn btn-airstyl"

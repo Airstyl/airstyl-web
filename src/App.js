@@ -3,8 +3,6 @@ import Layout from './components/Layout/Layout';
 import Content from './containers/Content/Content.container';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
-import Desktop from "./components/Responsive/Desktop";
-import Mobile from "./components/Responsive/Mobile";
 import { BrowserRouter} from 'react-router-dom';
 
 class App extends Component {

@@ -1,0 +1,23 @@
+.login-background {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+    background: url(../../assets/images/login/background.jpg) no-repeat center center fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+}
+
+.login-background-mobile {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+    background: url(../../assets/images/login/background_mobile.jpg) no-repeat center center fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+}

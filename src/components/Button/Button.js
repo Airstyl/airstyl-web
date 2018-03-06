@@ -1,10 +1,10 @@
 import React from 'react';
-import {Button} from 'react-bootstrap';
+import './Button.css';
 
 const button = (props) => {
     return (
-        <div>
-            <Button {...props}>{props.text}</Button>
+        <div style={{height: '100%', display: 'inline-block'}}>
+            <button className={"button"} {...props}>{props.children}</button>
         </div>
     );
 };
