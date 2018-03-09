@@ -16,15 +16,16 @@ export const AuthSuccess = (authData) => {
 
 export const AuthFail = (error) => {
     let payload = '';
+    console.log(error);
     if (error.response) {
         // Request was made and response had a status code that falls out of the range of 2xx
         payload = error.response.data.message;
     } else if (error.request) {
         // The request was made but no response was received
-        payload = error.request.message
+        payload = "Something went wrong. Please try again later."
     } else {
         // Something happened in setting up the request that triggered an Error
-        payload = error.message
+        payload = "Something went wrong. Please try again later."
     }
     return {
         type: actionTypes.AUTH_FAIL,

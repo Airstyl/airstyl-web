@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {withRouter} from 'react-router-dom';
 import {CircularProgress, Dialog, FlatButton} from "material-ui";
-import {Alert} from "react-bootstrap";
 import validator from 'validator';
 
 import Logo from '../../Logo/Logo';
@@ -94,12 +93,10 @@ class RegisterMobile extends Component {
     validateInput = (rules, value) => {
         if (!value) return null;
         if (rules.minLength)
-            if (value.length < rules.minLength)
-                return `Please enter ${rules.minLength} or more characters`;
+            if (value.length < rules.minLength.value) return rules.minLength.message;
         if (rules.minWords) {
-            for (let i=0; i < rules.minWords; i++) {
-                if (!value.split(' ')[i])
-                    return `Please enter ${rules.minWords} or more words`;
+            for (let i=0; i < rules.minWords.value; i++) {
+                if (!value.split(' ')[i]) return rules.minWords.message;
             }
         }
         if (rules.email)
@@ -136,6 +133,11 @@ class RegisterMobile extends Component {
         this.props.updateError({state: false, message: ''});
     };
 
+    closeEmailConfirmationModal = () => {
+        this.props.updateShowEmailConfirmationModal(false);
+        this.resetPage();
+    };
+
     resetPage = () => {
         this.props.resetPage();
     };
@@ -146,6 +148,14 @@ class RegisterMobile extends Component {
                 label="OK"
                 primary={true}
                 onClick={this.closeError}
+            />,
+        ];
+
+        const emailConfirmationButtons = [
+            <FlatButton
+                label="OK"
+                primary={true}
+                onClick={this.closeEmailConfirmationModal}
             />,
         ];
 
@@ -198,16 +208,15 @@ class RegisterMobile extends Component {
         );
 
         let confirmationEmailModal = (
-            <div style={{
-                minHeight: '100%',
-                backgroundColor: '#2abcbb',
-                zIndex: '1500'
-            }}>
-                <div style={{display: 'block', float: 'right'}}>&times;</div>
-            </div>
+            <Dialog
+                title={"Success!"}
+                modal={true}
+                open={this.props.showEmailConfirmationModal}
+                actions={emailConfirmationButtons}
+            >
+                A confirmation email has been sent to your registered email address for activation.
+            </Dialog>
         );
-
-
 
         return (
             <div>

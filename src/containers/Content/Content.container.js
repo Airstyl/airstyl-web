@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import {Route, Switch} from 'react-router-dom';
+
+import MinWidthTablet from '../../components/Responsive/MinWidthTablet';
+import Mobile from '../../components/Responsive/Mobile';
+
 import LoginContainer from '../Login/Login.container';
 import RegisterContainer from '../Register/Register.container';
-import Dashboard from '../Dashboard/Dashboard.container';
-import {Route, Switch} from 'react-router-dom';
-import EditProfile from "../EditProfile/EditProfile.container";
+import ComingSoonContainer from '../ComingSoon/ComingSoon.container';
 
 
 class Content extends Component {
@@ -12,7 +15,7 @@ class Content extends Component {
         return (
             <div>
                 <Switch>
-                    <Route path={"/"} exact render={() => <RegisterContainer/>} />
+                    <Route path={"/"} exact render={() => <ComingSoonContainer/>} />
                 </Switch>
             </div>
         );

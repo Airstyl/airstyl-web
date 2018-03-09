@@ -30,7 +30,10 @@ const initialState = {
                 validationState: null,
                 validationMessage: '',
                 rules: {
-                    minWords: 2
+                    minWords: {
+                        value: 2,
+                        message: "Please enter your name and surname"
+                    }
                 }
             }
         },
@@ -62,7 +65,9 @@ const initialState = {
                 validationState: null,
                 validationMessage: '',
                 rules: {
-                    email: true
+                    email: {
+                        message: "Please enter a valid email address"
+                    }
                 }
             }
         },
@@ -94,7 +99,10 @@ const initialState = {
                 validationState: null,
                 validationMessage: '',
                 rules: {
-                    minLength: 4
+                    minLength: {
+                        value: 5,
+                        message: "Please enter at least 5 characters"
+                    }
                 }
             }
         },
@@ -126,7 +134,10 @@ const initialState = {
                 validationState: null,
                 validationMessage: '',
                 rules: {
-                    minLength: 4
+                    minLength: {
+                        value: 5,
+                        message: "Please enter 5 or more characters"
+                    }
                 }
             }
         },

@@ -1,0 +1,66 @@
+#coming-soon {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+    background: url(../../assets/images/register/background.jpg) no-repeat center center fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    padding: 30px 250px 5px;
+}
+
+#coming-soon #logo {
+    margin: 0 0 15px;
+}
+
+#coming-soon #logo img {
+    height: 80px;
+}
+
+#coming-soon h2 {
+    color: #FFFFFF;
+    font-size: 28px;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    margin: 0;
+}
+
+#coming-soon h3 {
+    color: #FFFFFF;
+    font-size: 52px;
+    font-family: Tangerine;
+    margin: 0;
+}
+
+#coming-soon hr {
+    width: 8%;
+    margin: 20px 0;
+    display: block;
+}
+
+#coming-soon h4 {
+    color: #FFFFFF;
+    font-size: 32px;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    margin: 0;
+}
+
+#coming-soon #phones img {
+    height: 25px;
+}
+
+#coming-soon #phones {
+    margin: 25px 0 10px;
+}
+
+#coming-soon p {
+    color: #FFFFFF;
+    font-size: 12px;
+    display: block;
+    margin: auto 0;
+    bottom: 0;
+
+}

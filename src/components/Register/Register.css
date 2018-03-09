@@ -3,7 +3,7 @@
 }
 
 #logo img {
-    height: 60px;
+    height: 80px;
     margin-bottom: 10px;
 }
 
@@ -38,24 +38,24 @@
     text-decoration: #2aabd2 underline !important;
 }
 
-#confirmation-email-modal .modal-dialog{
-    width: 50%;
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
+#confirmation-email-modal .modal-header .logo img {
+    height: 50px;
 }
 
-#confirmation-email-modal img {
-    height: 60px;
+#confirmation-email-modal .modal-dialog {
+    width: 400px !important;
+    text-align: center;
 }
 
 #confirmation-email-modal h4{
     width: 100%;
-    font-size: 36px;
+    font-size: 28px;
 
 }
 
 #confirmation-email-modal p {
     font-size: 16px;
+    font-weight: normal;
 }
 
 #register-index h3 {
@@ -90,7 +90,7 @@
 
 #register-index p {
     margin-bottom: 10px;
-    padding-right: 250px;
+    padding-right: 100px;
     font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
@@ -128,7 +128,7 @@
 }
 
 #footer p {
-    margin-top: 20px
+    margin: 20px 0 20px 75px;
 }
 
 #footer img {

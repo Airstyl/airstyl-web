@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Row, Col, Modal, ButtonToolbar, Alert} from 'react-bootstrap';
-import {FlatButton, RaisedButton} from 'material-ui';
+import {RaisedButton} from 'material-ui';
 import {withRouter} from 'react-router-dom';
 import validator from 'validator';
 
@@ -23,12 +23,6 @@ class Register extends Component {
         this.state = {
             signUpType: 'email'
         };
-    }
-
-    componentDidMount() {
-        // axios.get('/Cities')
-        //     .then(response => console.log(response))
-        //     .catch(error => console.log(error))
     }
 
     inputChangedHandler = (event, inputId) => {
@@ -88,13 +82,11 @@ class Register extends Component {
     validateInput = (rules, value) => {
         if (value === null) return null;
         if (rules.minLength){
-            if (value.length < rules.minLength) return 'warning';
+            if (value.length < rules.minLength.value) return 'warning';
         }
         if (rules.minWords) {
-            for (let i=0; i < rules.minWords; i++) {
-                if (!value.split(' ')[i]) {
-                    return 'warning';
-                }
+            for (let i=0; i < rules.minWords.value; i++) {
+                if (!value.split(' ')[i]) return 'warning';
             }
         }
         if (rules.email) return this.validateEmail(value);
@@ -112,17 +104,16 @@ class Register extends Component {
     getValidationMessage= (rules, value) => {
         if (value === null) return '';
         if (rules.minLength){
-            if (value.length < rules.minLength)
-                return `Please enter ${rules.minLength} or more characters`;
+            if (value.length < rules.minLength.value)
+                return rules.minLength.message;
         }
         if (rules.minWords) {
-            for (let i=0; i < rules.minWords; i++) {
-                if (!value.split(' ')[i])
-                    return `Please enter ${rules.minWords} or more words`;
+            for (let i=0; i < rules.minWords.value; i++) {
+                if (!value.split(' ')[i]) return rules.minWords.message;
             }
         }
         if (rules.email)
-            if (!validator.isEmail(value)) return "Please enter a valid email address";
+            if (!validator.isEmail(value)) return rules.email.message;
 
         return '';
     };
@@ -196,13 +187,13 @@ class Register extends Component {
 
         let index = (
             <Row id={"register-index"} style={{paddingTop: '40px'}}>
-                <Col lg={5} lgOffset={2} md={5} mdOffset={2}>
+                <Col lg={4} lgOffset={2} md={4} mdOffset={2}>
                     <Logo id={"logo"}/>
                     <img src={launchingSoon} style={{height: '50px', display: 'block'}}/>
                     <img src={findAndBook} style={{height: '25px', display: 'block'}}/>
                     <hr/>
                     <p>
-                        Be the first to hear the news when our app drops!
+                        Be the first to hear the news when our app drops!<br />
                         Sign up now and get R50 off your first purchase when we launch.
                     </p>
                     <div id={"sign-up-container"}>
@@ -321,22 +312,22 @@ class Register extends Component {
                     </p>
                     {this.state.signUpType === 'email' ? emailSignUp : socialMediaSignUp}
                 </Modal.Body>
-                <Modal.Footer>
-                    {this.state.signUpType === 'email' ?
-                        (<FlatButton
-                            onClick={this.changeSignUpToSocialMedia}
-                            fullWidth
-                            label="Sign up with social media"
-                            labelStyle={{textTransform: 'normal', fontSize: '13px'}}
-                        />) :
-                        (<FlatButton
-                            onClick={this.changeSignUpToEmail}
-                            fullWidth
-                            label="Sign up with email"
-                            labelStyle={{textTransform: 'normal', fontSize: '13px'}}
-                        />)
-                    }
-                </Modal.Footer>
+                {/*<Modal.Footer>*/}
+                    {/*{this.state.signUpType === 'email' ?*/}
+                        {/*(<FlatButton*/}
+                            {/*onClick={this.changeSignUpToSocialMedia}*/}
+                            {/*fullWidth*/}
+                            {/*label="Sign up with social media"*/}
+                            {/*labelStyle={{textTransform: 'normal', fontSize: '13px'}}*/}
+                        {/*/>) :*/}
+                        {/*(<FlatButton*/}
+                            {/*onClick={this.changeSignUpToEmail}*/}
+                            {/*fullWidth*/}
+                            {/*label="Sign up with email"*/}
+                            {/*labelStyle={{textTransform: 'normal', fontSize: '13px'}}*/}
+                        {/*/>)*/}
+                    {/*}*/}
+                {/*</Modal.Footer>*/}
             </Modal>
         );
 
@@ -353,14 +344,33 @@ class Register extends Component {
                         If you haven't received it yet, click the button below to resend the activation email.
                     </p>
                     <RaisedButton
+                        label="Resend email"
+                        labelStyle={{textTransform: 'normal'}}
+                        style={{marginTop: '20px', display: 'block'}}
+                    />
+                    <RaisedButton
                         backgroundColor={"#2abcbb"}
-                        label="Resend activation email"
+                        label="OK"
                         labelColor={"#ffffff"}
                         labelStyle={{textTransform: 'normal'}}
-                        style={{marginTop: '20px'}}
+                        style={{marginTop: '20px', display: 'block'}}
+                        onClick={this.hideEmailConfirmationModal}
                     />
                 </Modal.Body>
             </Modal>
+        );
+
+        const footer = (
+            <div id={"footer"}>
+                <Row>
+                    <Col lg={9} lgOffset={1} md={9} mdOffset={1}>
+                        <img src={gse} />
+                        <img src={techNvest} style={{height: '40px'}}/>
+                        <img src={telkom} />
+                        <p>&copy; 2018 Airstyl, All Rights Reserved</p>
+                    </Col>
+                </Row>
+            </div>
         );
 
         return (
@@ -368,19 +378,8 @@ class Register extends Component {
                 {confirmationEmailModal}
                 {formModal}
                 {index}
-                <div style={{height: '60px', width: '100%'}} />
-                <div id={"footer"}>
-                    <Row>
-                        <Col lg={9} lgOffset={1} md={9} mdOffset={1}>
-                            <img src={gse} />
-                            <img src={techNvest} style={{height: '40px'}}/>
-                            <img src={telkom} />
-                        </Col>
-                        <Col lg={2} md={2} >
-                            <p>&copy; 2018 Airstyl, All Rights Reserved</p>
-                        </Col>
-                    </Row>
-                </div>
+                <div style={{height: '60px'}}/>
+                {footer}
             </div>
         );
     }
