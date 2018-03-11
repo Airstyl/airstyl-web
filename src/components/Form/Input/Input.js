@@ -19,15 +19,12 @@ const input = (props) => {
             inputElement = (
                 <FormGroup
                     controlId={props.key}
-                    validationState={props.validationState}
-
-                >
+                    validationState={props.validationState} >
                     <FormControl
                         type={props.elementType}
                         value={props.value}
                         onChange={props.changed}
-                        {...props.elementConfig}
-                    />
+                        {...props.elementConfig} />
                     <FormControl.Feedback />
                     <HelpBlock>{props.validationMessage}</HelpBlock>
                 </FormGroup>

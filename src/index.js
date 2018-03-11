@@ -10,13 +10,14 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 import registerReducer from './store/reducers/register.reducer';
 import loginReducer from './store/reducers/login.reducer';
+import sessionReducer from './store/reducers/session.reducer';
 
 const rootReducer = combineReducers({
+    session: sessionReducer,
     register: registerReducer,
     login: loginReducer,
 
 });
-
 
 const logger = store => {
     return next => {

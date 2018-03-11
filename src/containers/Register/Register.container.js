@@ -11,11 +11,6 @@ import RegisterMobile from '../../components/Register/RegisterMobile/RegisterMob
 import './Register.container.css';
 
 class RegisterContainer extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
         return (
             <div>

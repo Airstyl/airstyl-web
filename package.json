@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "emotion": "^9.0.2",
+    "firebase": "^4.11.0",
     "material-ui": "^0.20.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -24,6 +25,7 @@
     "react-scripts": "1.1.0",
     "react-select": "^1.2.1",
     "react-spinners": "^0.2.6",
+    "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "validator": "^9.4.1"

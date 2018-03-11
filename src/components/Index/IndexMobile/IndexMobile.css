@@ -1,0 +1,46 @@
+#index-mobile {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+    background: url(../../../assets/images/login/background_mobile.jpg) no-repeat center center fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    text-align: center;
+}
+
+#index-mobile #logo img {
+    margin: 20px 0 0;
+    height: 100px;
+}
+
+#index-mobile #buttons {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    margin-bottom: 15%;
+}
+
+#index-mobile #buttons .btn {
+    border: none;
+    text-shadow: none;
+    width: 80%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    margin: 15px auto;
+    font-weight: bold;
+}
+
+#index-mobile #buttons .consumer {
+    background: #2abcbb none;
+    color: #FFFFFF;
+}
+
+#index-mobile #buttons .stylist {
+    background: #d8245e none;
+    color: #FFFFFF;
+}

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { BrowserRouter} from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Content from './containers/Content/Content.container';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
-import { BrowserRouter} from 'react-router-dom';
 
 class App extends Component {
   render() {

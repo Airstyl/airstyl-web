@@ -4,6 +4,8 @@ import {RaisedButton} from 'material-ui';
 import {withRouter} from 'react-router-dom';
 import validator from 'validator';
 
+import * as users from '../../firebase/db/db.users';
+
 import launchingSoon from '../../assets/images/register/launching_soon.png';
 import findAndBook from '../../assets/images/register/find_and_book.png';
 import Phones from '../../assets/images/register/phones.png';
@@ -21,8 +23,18 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signUpType: 'email'
+            signUpType: 'email',
+            unavailableValues: []
         };
+    }
+
+    componentDidMount() {
+        let newArray = this.state.unavailableValues.slice();
+        newArray.push(users.getUnavailableUsernames());
+        this.setState({
+            unavailableValues: newArray
+        });
+        console.log("unavailableValues: ", this.state.unavailableValues);
     }
 
     inputChangedHandler = (event, inputId) => {
@@ -80,18 +92,56 @@ class Register extends Component {
     };
 
     validateInput = (rules, value) => {
-        if (value === null) return null;
-        if (rules.minLength){
-            if (value.length < rules.minLength.value) return 'warning';
+        let valid = 'success';
+        if (value === null) {
+            valid = null;
         }
-        if (rules.minWords) {
+        else if (rules.minLength){
+            if (value.length < rules.minLength.value) valid = 'warning';
+        }
+        else if (rules.minWords) {
             for (let i=0; i < rules.minWords.value; i++) {
-                if (!value.split(' ')[i]) return 'warning';
+                if (!value.split(' ')[i]) valid = 'warning';
             }
         }
-        if (rules.email) return this.validateEmail(value);
+        else if (rules.email) {
+            valid = this.validateEmail(value);
+        }
+        else if (rules.unique) {
+            console.log("Unavailable Values: ", this.state.unavailableValues);
+            console.log("Value: ", value);
+            if (this.state.unavailableValues.includes(value)) {
+                console.log("Not unique");
+                valid = 'warning';
+            }
+        }
 
-        return 'success';
+        return valid;
+    };
+
+    getValidationMessage= (rules, value) => {
+        let message = '';
+        if (value === null) {
+            message = '';
+        }
+        else if (rules.minLength){
+            if (value.length < rules.minLength.value) message = rules.minLength.message;
+        }
+        else if (rules.minWords) {
+            for (let i=0; i < rules.minWords.value; i++) {
+                if (!value.split(' ')[i]) message = rules.minWords.message;
+            }
+        }
+        else if (rules.email) {
+            if (!validator.isEmail(value)) message = rules.email.message;
+        }
+        else if (rules.unique) {
+            if (this.state.unavailableValues.includes(value)) {
+                message = rules.unique.message;
+            }
+        }
+
+        return message;
     };
 
     validateEmail = (value) => {
@@ -99,23 +149,6 @@ class Register extends Component {
             return 'success';
         }
         return 'warning';
-    };
-
-    getValidationMessage= (rules, value) => {
-        if (value === null) return '';
-        if (rules.minLength){
-            if (value.length < rules.minLength.value)
-                return rules.minLength.message;
-        }
-        if (rules.minWords) {
-            for (let i=0; i < rules.minWords.value; i++) {
-                if (!value.split(' ')[i]) return rules.minWords.message;
-            }
-        }
-        if (rules.email)
-            if (!validator.isEmail(value)) return rules.email.message;
-
-        return '';
     };
 
     showFormModal = () => {
@@ -246,6 +279,7 @@ class Register extends Component {
                         value={formElement.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         valueChanged={(value) => this.valueChangedHandler(value, formElement.id)}
+                        onblur={() => this.validateInputField(formElement.id)}
                         validationState={formElement.config.elementValidation.validationState}
                         validationMessage={formElement.config.elementValidation.validationMessage}
                     />

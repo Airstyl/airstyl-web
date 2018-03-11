@@ -5,8 +5,9 @@ import MinWidthTablet from '../../components/Responsive/MinWidthTablet';
 import Mobile from '../../components/Responsive/Mobile';
 
 import LoginContainer from '../Login/Login.container';
+import IndexContainer from '../Index/Index.container';
 import RegisterContainer from '../Register/Register.container';
-import ComingSoonContainer from '../ComingSoon/ComingSoon.container';
+import * as routes from '../../constants/routes';
 
 
 class Content extends Component {
@@ -14,9 +15,18 @@ class Content extends Component {
     render () {
         return (
             <div>
-                <Switch>
-                    <Route path={"/"} exact render={() => <ComingSoonContainer/>} />
-                </Switch>
+                <MinWidthTablet>
+                    <Switch>
+                        <Route path={routes.index} exact render={() => <RegisterContainer/>} />
+                        <Route path={routes.register} exact render={() => <RegisterContainer/>} />
+                    </Switch>
+                </MinWidthTablet>
+                <Mobile>
+                    <Switch>
+                        <Route path={routes.index} exact render={() => <IndexContainer/>} />
+                        <Route path={routes.register} exact render={() => <RegisterContainer/>} />
+                    </Switch>
+                </Mobile>
             </div>
         );
     }

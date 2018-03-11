@@ -1,5 +1,7 @@
 import * as actionTypes from "./actions";
-import axios from "../../axios-register";
+import {auth, users} from '../../firebase';
+
+import * as firebaseErrors from '../../constants/firebase';
 
 export const AuthStart = () => {
     return {
@@ -7,25 +9,34 @@ export const AuthStart = () => {
     };
 };
 
-export const AuthSuccess = (authData) => {
+export const AuthSuccess = (authData, firstname, lastname, email, username) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        payload: authData
+        payload: {
+            id: authData.uid,
+            name: firstname,
+            surname: lastname,
+            username: username,
+            email: email,
+            emailVerified: authData.emailVerified
+        }
     };
 };
 
 export const AuthFail = (error) => {
     let payload = '';
-    console.log(error);
-    if (error.response) {
-        // Request was made and response had a status code that falls out of the range of 2xx
-        payload = error.response.data.message;
-    } else if (error.request) {
-        // The request was made but no response was received
-        payload = "Something went wrong. Please try again later."
-    } else {
-        // Something happened in setting up the request that triggered an Error
-        payload = "Something went wrong. Please try again later."
+    switch (error.code) {
+        case (firebaseErrors.EMAIL_FORMAT_INVALID):
+            payload = 'Email invalid. Please enter a valid email address.';
+            break;
+        case (firebaseErrors.USER_EXISTS):
+            payload = 'A user already exists with this email address.';
+            break;
+        case (firebaseErrors.WEAK_PASSWORD):
+            payload = 'Weak password. Please enter a stronger password.'
+            break;
+        default:
+            payload = '';
     }
     return {
         type: actionTypes.AUTH_FAIL,
@@ -33,20 +44,28 @@ export const AuthFail = (error) => {
     };
 };
 
-export const Auth = (firstname, lastname, emailOrMobile, password, username) => {
+export const Auth = (firstname, lastname, email, password, username) => {
     return dispatch => {
         dispatch(AuthStart());
 
-        axios.post('/users/register', {
-            ACC_STATUS: 'Active',
-            email : emailOrMobile,
-            firstname: firstname,
-            lastname: lastname,
-            password: password,
-            username: username
-        })
-        .then(response => dispatch(AuthSuccess(response.data)))
-        .catch(error => dispatch(AuthFail(error)))
+        auth.doCreateUserWithEmailAndPassword(email, password)
+            .then(authUser => {
 
+                users.createUser(authUser.uid, firstname, lastname, username, email)
+                    .then(() => {
+
+                        dispatch(AuthSuccess(authUser, firstname, lastname, email, username));
+                    })
+                    .catch(error => {
+
+                        console.log(error);
+                        dispatch(AuthFail(error));
+                    });
+            })
+            .catch(error => {
+
+                console.log(error);
+                dispatch(AuthFail(error));
+            });
     };
 };

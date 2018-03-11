@@ -102,6 +102,10 @@ const initialState = {
                     minLength: {
                         value: 5,
                         message: "Please enter at least 5 characters"
+                    },
+                    unique: {
+                        value: true,
+                        message: "Username already exists. Please choose a different one."
                     }
                 }
             }
@@ -135,8 +139,8 @@ const initialState = {
                 validationMessage: '',
                 rules: {
                     minLength: {
-                        value: 5,
-                        message: "Please enter 5 or more characters"
+                        value: 6,
+                        message: `Please enter 6 or more characters`
                     }
                 }
             }
@@ -148,7 +152,7 @@ const initialState = {
     error: {
         state: false,
         message: ''
-    }
+    },
 };
 
 
