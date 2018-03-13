@@ -21,8 +21,7 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signUpType: 'email',
-            themeColor: this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"
+            signUpType: 'email'
         };
     }
 
@@ -207,7 +206,7 @@ class Register extends Component {
 
         let index = (
             <Row id={"register-index"} style={{paddingTop: '40px'}}>
-                <Col lg={4} lgOffset={2} md={4} mdOffset={2}>
+                <Col lg={4} lgOffset={2} md={6} mdOffset={2}>
                     <Logo id={"logo"}/>
                     <img src={launchingSoon} style={{height: '50px', display: 'block'}}/>
                     <img src={findAndBook} style={{height: '25px', display: 'block'}}/>
@@ -251,12 +250,7 @@ class Register extends Component {
         );
 
         let form = (
-            <div
-                style={{
-                    display: 'block',
-                    margin: '0 auto 18px',
-                    width: '100%'
-                }}>
+            <div>
                 {formElementsArray.map(formElement => (
                     <Input
                         key={formElement.id}
@@ -287,7 +281,7 @@ class Register extends Component {
                 <RaisedButton
                     onClick={this.registerClickHandler}
                     disabled={this.disableButton()}
-                    backgroundColor={this.state.themeColor}
+                    backgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
                     label="Join Now"
                     labelColor={"#ffffff"}
                     labelStyle={{textTransform: 'normal'}}
@@ -322,7 +316,7 @@ class Register extends Component {
 
         const formModal = (
             <Modal id={"form-modal"} show={this.props.showFormModal} onHide={this.hideFormModal} backdrop={"static"}>
-                <Modal.Header closeButton style={{backgroundColor: this.state.themeColor}}>
+                <Modal.Header closeButton style={{backgroundColor: this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}}>
                     <Logo/>
                 </Modal.Header>
                 <Modal.Body>
@@ -353,7 +347,7 @@ class Register extends Component {
 
         const confirmationEmailModal = (
             <Modal id={"confirmation-email-modal"} show={this.props.showEmailConfirmationModal} onHide={this.resetPage} backdrop={"static"}>
-                <Modal.Header closeButton style={{backgroundColor: this.state.themeColor}}>
+                <Modal.Header closeButton style={{backgroundColor: this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}}>
                     <Logo/>
                 </Modal.Header>
                 <Modal.Body>
@@ -369,7 +363,7 @@ class Register extends Component {
                         style={{marginTop: '20px', display: 'block'}}
                     />
                     <RaisedButton
-                        backgroundColor={this.state.themeColor}
+                        backgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
                         label="OK"
                         labelColor={"#ffffff"}
                         labelStyle={{textTransform: 'normal'}}

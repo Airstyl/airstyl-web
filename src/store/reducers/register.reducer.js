@@ -144,7 +144,7 @@ const initialState = {
                     }
                 }
             }
-        },
+        }
     },
     showFormModal: false,
     showEmailConfirmationModal: false,

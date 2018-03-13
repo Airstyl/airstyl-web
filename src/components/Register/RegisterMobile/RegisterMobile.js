@@ -12,8 +12,7 @@ class RegisterMobile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            signUpType: 'email',
-            themeColor: this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"
+            signUpType: 'email'
         };
     }
 
@@ -164,7 +163,7 @@ class RegisterMobile extends Component {
 
         let appBar = (
             <AppBar
-                style={{backgroundColor: this.state.themeColor}}
+                style={{backgroundColor: this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}}
                 title={<span style={{fontSize: '18px'}}>Register</span>}
                 iconElementLeft={<IconButton onClick={this.goToIndex}>{arrowBack}</IconButton>}
             />
@@ -209,7 +208,7 @@ class RegisterMobile extends Component {
                         valueChanged={(value) => this.valueChangedHandler(value, formElement.id)}
                         validationState={formElement.config.elementValidation.validationState}
                         validationMessage={formElement.config.elementValidation.validationMessage}
-                        themeColor={this.state.themeColor}
+                        themeColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
                     />
                 ))}
             </div>
@@ -264,8 +263,8 @@ class RegisterMobile extends Component {
                     </div>
                     <div id={"register-submit-mobile"}>
                         <RaisedButton
-                            backgroundColor={this.state.themeColor}
-                            disabledBackgroundColor={this.state.themeColor}
+                            backgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
+                            disabledBackgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
                             label="JOIN NOW"
                             fullWidth
                             disabled={this.disableButton()}
