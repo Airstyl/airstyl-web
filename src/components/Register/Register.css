@@ -12,6 +12,14 @@
     text-align: center;
 }
 
+#form-modal .consumer {
+    background-color: #2abcbb;
+}
+
+#form-modal .stylist {
+    background-color: #d8245e;
+}
+
 #form-modal img {
     height: 60px;
 }
@@ -56,6 +64,14 @@
 #confirmation-email-modal p {
     font-size: 16px;
     font-weight: normal;
+}
+
+#confirmation-email-modal .consumer {
+    background-color: #2abcbb;
+}
+
+#confirmation-email-modal .stylist {
+    background-color: #d8245e;
 }
 
 #register-index h3 {

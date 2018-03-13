@@ -26,7 +26,7 @@ class LoginContainer extends Component{
                             loading={this.props.loading}
                             updateLoginForm={this.props.onUpdateLoginForm}
                             updateLoading={this.props.onUpdateLoading}
-                            submitLoginForm={this.props.onInitLogin}
+                            // submitLoginForm={this.props.onInitLogin}
                         />
                     </div>
                 </MinWidthTablet>
@@ -37,7 +37,7 @@ class LoginContainer extends Component{
                             loading={this.props.loading}
                             updateLoginForm={this.props.onUpdateLoginForm}
                             updateLoading={this.props.onUpdateLoading}
-                            submitLoginForm={this.props.onInitLogin}
+                            // submitLoginForm={this.props.onInitLogin}
                         />
                     </div>
                 </Mobile>
@@ -57,7 +57,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onUpdateLoginForm: (loginForm) => dispatch({type: actionTypes.UPDATE_LOGIN_FORM, payload: loginForm}),
         onUpdateLoading: (loading) => dispatch({type: actionTypes.UPDATE_LOADING, payload: loading}),
-        onInitLogin: (username, password) => dispatch(actions.Auth(username, password))
+        //onInitLogin: (username, password) => dispatch(actions.Auth(username, password))
     }
 };
 

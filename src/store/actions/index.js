@@ -1,3 +1,4 @@
 export  {
-    Auth
+    RegisterConsumerWithEmailAndPassword,
+    RegisterStylistWithEmailAndPassword,
 } from './auth'

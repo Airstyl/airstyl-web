@@ -4,8 +4,6 @@ import {RaisedButton} from 'material-ui';
 import {withRouter} from 'react-router-dom';
 import validator from 'validator';
 
-import * as users from '../../firebase/db/db.users';
-
 import launchingSoon from '../../assets/images/register/launching_soon.png';
 import findAndBook from '../../assets/images/register/find_and_book.png';
 import Phones from '../../assets/images/register/phones.png';
@@ -24,17 +22,8 @@ class Register extends Component {
         super(props);
         this.state = {
             signUpType: 'email',
-            unavailableValues: []
+            themeColor: this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"
         };
-    }
-
-    componentDidMount() {
-        let newArray = this.state.unavailableValues.slice();
-        newArray.push(users.getUnavailableUsernames());
-        this.setState({
-            unavailableValues: newArray
-        });
-        console.log("unavailableValues: ", this.state.unavailableValues);
     }
 
     inputChangedHandler = (event, inputId) => {
@@ -107,14 +96,6 @@ class Register extends Component {
         else if (rules.email) {
             valid = this.validateEmail(value);
         }
-        else if (rules.unique) {
-            console.log("Unavailable Values: ", this.state.unavailableValues);
-            console.log("Value: ", value);
-            if (this.state.unavailableValues.includes(value)) {
-                console.log("Not unique");
-                valid = 'warning';
-            }
-        }
 
         return valid;
     };
@@ -135,11 +116,6 @@ class Register extends Component {
         else if (rules.email) {
             if (!validator.isEmail(value)) message = rules.email.message;
         }
-        else if (rules.unique) {
-            if (this.state.unavailableValues.includes(value)) {
-                message = rules.unique.message;
-            }
-        }
 
         return message;
     };
@@ -149,6 +125,16 @@ class Register extends Component {
             return 'success';
         }
         return 'warning';
+    };
+
+    openModalAsConsumer = () => {
+        this.props.registerAsConsumer();
+        this.showFormModal();
+    };
+
+    openModalAsStylist = () => {
+        this.props.registerAsStylist();
+        this.showFormModal();
     };
 
     showFormModal = () => {
@@ -197,9 +183,10 @@ class Register extends Component {
         const lastname = this.props.registerForm.fullname.elementConfig.value.split(' ')[1];
         const email = this.props.registerForm.mobileOrEmail.elementConfig.value;
         const password = this.props.registerForm.password.elementConfig.value;
-        const username = this.props.registerForm.username.elementConfig.value;
 
-        this.props.submitRegisterForm(firstname, lastname, email, password, username);
+        this.props.registerAs === 'consumer' ?
+            this.props.submitConsumerRegisterForm(firstname, lastname, email, password) :
+            this.props.submitStylistRegisterForm(firstname, lastname, email, password);
     };
 
     resetPage = () => {
@@ -232,7 +219,7 @@ class Register extends Component {
                     <div id={"sign-up-container"}>
                         <ButtonToolbar>
                             <Button
-                                onClick={this.showFormModal}
+                                onClick={this.openModalAsConsumer}
                                 style={{
                                     backgroundColor: '#2abcbb',
                                     width: '180px',
@@ -245,7 +232,7 @@ class Register extends Component {
                                 TO FIND A STYLIST <br/> SIGN UP
                             </Button>
                             <Button
-                                onClick={this.showFormModal}
+                                onClick={this.openModalAsStylist}
                                 style={{
                                     backgroundColor: '#d8245e',
                                     width: '180px',
@@ -279,7 +266,6 @@ class Register extends Component {
                         value={formElement.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         valueChanged={(value) => this.valueChangedHandler(value, formElement.id)}
-                        onblur={() => this.validateInputField(formElement.id)}
                         validationState={formElement.config.elementValidation.validationState}
                         validationMessage={formElement.config.elementValidation.validationMessage}
                     />
@@ -301,7 +287,7 @@ class Register extends Component {
                 <RaisedButton
                     onClick={this.registerClickHandler}
                     disabled={this.disableButton()}
-                    backgroundColor={"#2abcbb"}
+                    backgroundColor={this.state.themeColor}
                     label="Join Now"
                     labelColor={"#ffffff"}
                     labelStyle={{textTransform: 'normal'}}
@@ -336,11 +322,11 @@ class Register extends Component {
 
         const formModal = (
             <Modal id={"form-modal"} show={this.props.showFormModal} onHide={this.hideFormModal} backdrop={"static"}>
-                <Modal.Header closeButton style={{backgroundColor: '#2abcbb'}}>
+                <Modal.Header closeButton style={{backgroundColor: this.state.themeColor}}>
                     <Logo/>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>
+                    <p style={{marginBottom: '30px'}}>
                         Sign up to be the first in the line to get the app
                         and get R50 off your first purchase when we launch.
                     </p>
@@ -367,7 +353,7 @@ class Register extends Component {
 
         const confirmationEmailModal = (
             <Modal id={"confirmation-email-modal"} show={this.props.showEmailConfirmationModal} onHide={this.resetPage} backdrop={"static"}>
-                <Modal.Header closeButton style={{backgroundColor: '#2abcbb'}}>
+                <Modal.Header closeButton style={{backgroundColor: this.state.themeColor}}>
                     <Logo/>
                 </Modal.Header>
                 <Modal.Body>
@@ -383,7 +369,7 @@ class Register extends Component {
                         style={{marginTop: '20px', display: 'block'}}
                     />
                     <RaisedButton
-                        backgroundColor={"#2abcbb"}
+                        backgroundColor={this.state.themeColor}
                         label="OK"
                         labelColor={"#ffffff"}
                         labelStyle={{textTransform: 'normal'}}

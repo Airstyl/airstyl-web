@@ -2426,3 +2426,9 @@ In the future, we might start automatically compiling incompatible third-party m
 ## Something Missing?
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
+
+## How Authentication Works
+
+Immediately after the store is created, a listener function named verifyUser is called that checks if there is already 
+Authentication data stored in the local browser storage. If so, that information is stored in the session reducer.
+Else, it sets the user as logged out in the session reducer.

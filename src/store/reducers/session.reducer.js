@@ -1,37 +1,35 @@
 import * as actionTypes from '../actions/actions';
 
 const initialState = {
-    authUser: null,
-    userDetails: null
+    authenticated: false,
+    error: null,
+    authData: null
 };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case (actionTypes.UPDATE_AUTH_USER): {
+        case (actionTypes.AUTH_USER): {
             return {
                 ...state,
-                authUser: action.payload
+                authenticated: true,
+                authData: action.payload,
+                error: null,
             }
         }
-        case (actionTypes.UPDATE_USER_DETAILS): {
+        case (actionTypes.AUTH_ERROR): {
             return {
                 ...state,
-                userDetails: action.payload
+                authenticated: false,
+                authData: null,
+                error: true,
             }
         }
-        case (actionTypes.AUTH_SUCCESS): {
+        case (actionTypes.SIGN_OUT_USER): {
             return {
                 ...state,
-                authUser: {
-                    id: action.payload.id,
-                    emailVerified: action.payload.emailVerified
-                },
-                userDetails: {
-                    name: action.payload.name,
-                    surname: action.payload.surname,
-                    username: action.payload.username,
-                    email: action.payload.email
-                }
+                authenticated: false,
+                authData: null,
+                error: null,
             }
         }
         default:

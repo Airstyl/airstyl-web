@@ -1,14 +1,22 @@
 import React, {Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {withRouter} from 'react-router-dom';
-import {CircularProgress, Dialog, FlatButton} from "material-ui";
+import {AppBar, CircularProgress, Dialog, FlatButton, FontIcon, IconButton} from "material-ui";
+import BackArrow from 'material-ui/svg-icons/navigation/arrow-back';
 import validator from 'validator';
 
-import Logo from '../../Logo/Logo';
-import MobileInput from '../../Form/Input/InputMobile';
+import InputMobile from '../../Form/Input/InputMobile';
 import "./RegisterMobile.css";
 
 class RegisterMobile extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            signUpType: 'email',
+            themeColor: this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"
+        };
+    }
+
     inputChangedHandler = (event, inputId) => {
         const updatedRegisterForm = {
             ...this.props.registerForm
@@ -124,9 +132,10 @@ class RegisterMobile extends Component {
         const lastname = this.props.registerForm.fullname.elementConfigMobile.value.split(' ')[1];
         const email = this.props.registerForm.mobileOrEmail.elementConfigMobile.value;
         const password = this.props.registerForm.password.elementConfigMobile.value;
-        const username = this.props.registerForm.username.elementConfigMobile.value;
 
-        this.props.submitRegisterForm(firstname, lastname, email, password, username);
+        this.props.registerAs === 'consumer' ?
+            this.props.submitConsumerRegisterForm(firstname, lastname, email, password) :
+            this.props.submitStylistRegisterForm(firstname, lastname, email, password);
     };
 
     closeError = () => {
@@ -136,13 +145,31 @@ class RegisterMobile extends Component {
     closeEmailConfirmationModal = () => {
         this.props.updateShowEmailConfirmationModal(false);
         this.resetPage();
+        this.props.history.replace("/");
     };
 
     resetPage = () => {
         this.props.resetPage();
     };
 
+    goToIndex = () => {
+        this.resetPage();
+        this.props.history.goBack();
+    };
+
     render() {
+        const arrowBack = (
+            <BackArrow color={"#FFFFFF"}/>
+        );
+
+        let appBar = (
+            <AppBar
+                style={{backgroundColor: this.state.themeColor}}
+                title={<span style={{fontSize: '18px'}}>Register</span>}
+                iconElementLeft={<IconButton onClick={this.goToIndex}>{arrowBack}</IconButton>}
+            />
+        );
+
         const errorButton = [
             <FlatButton
                 label="OK"
@@ -171,7 +198,7 @@ class RegisterMobile extends Component {
         let form = (
             <div>
                 {formElementsArray.map(formElement => (
-                    <MobileInput
+                    <InputMobile
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfigMobile}
@@ -182,6 +209,7 @@ class RegisterMobile extends Component {
                         valueChanged={(value) => this.valueChangedHandler(value, formElement.id)}
                         validationState={formElement.config.elementValidation.validationState}
                         validationMessage={formElement.config.elementValidation.validationMessage}
+                        themeColor={this.state.themeColor}
                     />
                 ))}
             </div>
@@ -223,31 +251,35 @@ class RegisterMobile extends Component {
                 {confirmationEmailModal}
                 {loading}
                 {error}
+                {appBar}
                 <div className={"container"} >
                     <div className={"register-body-mobile"}>
-                        <Logo id={"register-logo"}/>
+                        <p>
+                            Sign up to be the first in the line to get the app
+                            and get R50 off your first purchase when we launch.
+                        </p>
                         <div className={"register-form-mobile"}>
                             {form}
                         </div>
-                        <div id={"register-submit-mobile"}>
-                            <RaisedButton
-                                backgroundColor={"#2abcbb"}
-                                disabledBackgroundColor={"#2abcbb"}
-                                label="JOIN NOW"
-                                primary
-                                fullWidth
-                                disabled={this.disableButton()}
-                                style={{
-                                    height: '36px',
-                                    borderStyle: '5px'
-                                }}
-                                labelStyle={{
-                                    margin: '7px 0',
-                                    display: 'block'
-                                }}
-                                onClick={this.registerClickHandler}
-                            />
-                        </div>
+                    </div>
+                    <div id={"register-submit-mobile"}>
+                        <RaisedButton
+                            backgroundColor={this.state.themeColor}
+                            disabledBackgroundColor={this.state.themeColor}
+                            label="JOIN NOW"
+                            fullWidth
+                            disabled={this.disableButton()}
+                            style={{
+                                height: '36px',
+                                borderStyle: '5px'
+                            }}
+                            labelStyle={{
+                                margin: '7px 0',
+                                display: 'block'
+                            }}
+                            labelColor={"#FFFFFF"}
+                            onClick={this.registerClickHandler}
+                        />
                     </div>
                 </div>
             </div>

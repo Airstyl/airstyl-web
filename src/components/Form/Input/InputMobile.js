@@ -18,6 +18,12 @@ const inputMobile = (props) => {
                     fullWidth={true}
                     onChange={props.textFieldChanged}
                     {...props.elementConfig}
+                    floatingLabelFocusStyle={{
+                        color: props.themeColor
+                    }}
+                    underlineFocusStyle={{
+                        borderColor: props.themeColor
+                    }}
                 />
             );
             break;

@@ -12,18 +12,18 @@ const initialState = {
                 value: '',
                 floatingLabelText: 'Full Name',
                 floatingLabelStyle: {
-                    color: '#ffffff',
+                    color: '#000000',
                     fontWeight: 'normal'
                 },
                 inputStyle: {
-                    color: '#ffffff',
+                    color: '#000000',
                     fontWeight: 'normal'
                 },
                 underlineStyle: {
-                    borderColor: "#ffffff"
+                    borderColor: "#000000"
                 },
                 underlineFocusStyle: {
-                    borderColor: "#ffffff"
+                    borderColor: "#000000"
                 }
             },
             elementValidation: {
@@ -47,18 +47,18 @@ const initialState = {
                 value: '',
                 floatingLabelText: 'Email',
                 floatingLabelStyle: {
-                    color: '#ffffff',
+                    color: '#000000',
                     fontWeight: 'normal'
                 },
                 inputStyle: {
-                    color: '#ffffff',
+                    color: '#000000',
                     fontWeight: 'normal'
                 },
                 underlineStyle: {
-                    borderColor: "#ffffff"
+                    borderColor: "#000000"
                 },
                 underlineFocusStyle: {
-                    borderColor: "#ffffff"
+                    borderColor: "#000000"
                 }
             },
             elementValidation: {
@@ -71,45 +71,45 @@ const initialState = {
                 }
             }
         },
-        username: {
-            elementType: 'text',
-            elementConfig: {
-                value: '',
-                placeholder: "Username"
-            },
-            elementConfigMobile: {
-                value: '',
-                floatingLabelText: 'Username',
-                floatingLabelStyle: {
-                    color: '#ffffff',
-                    fontWeight: 'normal'
-                },
-                inputStyle: {
-                    color: '#ffffff',
-                    fontWeight: 'normal'
-                },
-                underlineStyle: {
-                    borderColor: "#ffffff"
-                },
-                underlineFocusStyle: {
-                    borderColor: "#ffffff"
-                }
-            },
-            elementValidation: {
-                validationState: null,
-                validationMessage: '',
-                rules: {
-                    minLength: {
-                        value: 5,
-                        message: "Please enter at least 5 characters"
-                    },
-                    unique: {
-                        value: true,
-                        message: "Username already exists. Please choose a different one."
-                    }
-                }
-            }
-        },
+        // username: {
+        //     elementType: 'text',
+        //     elementConfig: {
+        //         value: '',
+        //         placeholder: "Username"
+        //     },
+        //     elementConfigMobile: {
+        //         value: '',
+        //         floatingLabelText: 'Username',
+        //         floatingLabelStyle: {
+        //             color: '#ffffff',
+        //             fontWeight: 'normal'
+        //         },
+        //         inputStyle: {
+        //             color: '#ffffff',
+        //             fontWeight: 'normal'
+        //         },
+        //         underlineStyle: {
+        //             borderColor: "#ffffff"
+        //         },
+        //         underlineFocusStyle: {
+        //             borderColor: "#ffffff"
+        //         }
+        //     },
+        //     elementValidation: {
+        //         validationState: null,
+        //         validationMessage: '',
+        //         rules: {
+        //             minLength: {
+        //                 value: 5,
+        //                 message: "Please enter at least 5 characters"
+        //             },
+        //             unique: {
+        //                 value: true,
+        //                 message: "Username already exists. Please choose a different one."
+        //             }
+        //         }
+        //     }
+        // },
         password: {
             elementType: 'password',
             elementConfig: {
@@ -120,18 +120,18 @@ const initialState = {
                 value: '',
                 floatingLabelText: 'Create Password',
                 floatingLabelStyle: {
-                    color: '#ffffff',
+                    color: '#000000',
                     fontWeight: 'normal'
                 },
                 inputStyle: {
-                    color: '#ffffff',
+                    color: '#000000',
                     fontWeight: 'normal'
                 },
                 underlineStyle: {
-                    borderColor: "#ffffff"
+                    borderColor: "#000000"
                 },
                 underlineFocusStyle: {
-                    borderColor: "#ffffff"
+                    borderColor: "#000000"
                 }
             },
             elementValidation: {
@@ -151,8 +151,9 @@ const initialState = {
     loading: false,
     error: {
         state: false,
-        message: ''
+        message: null
     },
+    registerAs: "consumer"
 };
 
 
@@ -191,9 +192,158 @@ const reducer = (state = initialState, action) => {
         case (actionTypes.AUTH_SUCCESS):
             return {
                 ...state,
+                registerForm: {
+                    fullname: {
+                        elementType: 'text',
+                        elementConfig: {
+                            value: '',
+                            placeholder: "Full Name"
+                        },
+                        elementConfigMobile: {
+                            value: '',
+                            floatingLabelText: 'Full Name',
+                            floatingLabelStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            inputStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            underlineStyle: {
+                                borderColor: "#000000"
+                            },
+                            underlineFocusStyle: {
+                                borderColor: "#000000"
+                            }
+                        },
+                        elementValidation: {
+                            validationState: null,
+                            validationMessage: '',
+                            rules: {
+                                minWords: {
+                                    value: 2,
+                                    message: "Please enter your name and surname"
+                                }
+                            }
+                        }
+                    },
+                    mobileOrEmail: {
+                        elementType: "text",
+                        elementConfig: {
+                            value: '',
+                            placeholder: "Email"
+                        },
+                        elementConfigMobile: {
+                            value: '',
+                            floatingLabelText: 'Email',
+                            floatingLabelStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            inputStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            underlineStyle: {
+                                borderColor: "#000000"
+                            },
+                            underlineFocusStyle: {
+                                borderColor: "#000000"
+                            }
+                        },
+                        elementValidation: {
+                            validationState: null,
+                            validationMessage: '',
+                            rules: {
+                                email: {
+                                    message: "Please enter a valid email address"
+                                }
+                            }
+                        }
+                    },
+                    // username: {
+                    //     elementType: 'text',
+                    //     elementConfig: {
+                    //         value: '',
+                    //         placeholder: "Username"
+                    //     },
+                    //     elementConfigMobile: {
+                    //         value: '',
+                    //         floatingLabelText: 'Username',
+                    //         floatingLabelStyle: {
+                    //             color: '#ffffff',
+                    //             fontWeight: 'normal'
+                    //         },
+                    //         inputStyle: {
+                    //             color: '#ffffff',
+                    //             fontWeight: 'normal'
+                    //         },
+                    //         underlineStyle: {
+                    //             borderColor: "#ffffff"
+                    //         },
+                    //         underlineFocusStyle: {
+                    //             borderColor: "#ffffff"
+                    //         }
+                    //     },
+                    //     elementValidation: {
+                    //         validationState: null,
+                    //         validationMessage: '',
+                    //         rules: {
+                    //             minLength: {
+                    //                 value: 5,
+                    //                 message: "Please enter at least 5 characters"
+                    //             },
+                    //             unique: {
+                    //                 value: true,
+                    //                 message: "Username already exists. Please choose a different one."
+                    //             }
+                    //         }
+                    //     }
+                    // },
+                    password: {
+                        elementType: 'password',
+                        elementConfig: {
+                            value: '',
+                            placeholder: "Create Password"
+                        },
+                        elementConfigMobile: {
+                            value: '',
+                            floatingLabelText: 'Create Password',
+                            floatingLabelStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            inputStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            underlineStyle: {
+                                borderColor: "#000000"
+                            },
+                            underlineFocusStyle: {
+                                borderColor: "#000000"
+                            }
+                        },
+                        elementValidation: {
+                            validationState: null,
+                            validationMessage: '',
+                            rules: {
+                                minLength: {
+                                    value: 6,
+                                    message: `Please enter 6 or more characters`
+                                }
+                            }
+                        }
+                    },
+                },
                 showFormModal: false,
                 showEmailConfirmationModal: true,
-                loading: false
+                loading: false,
+                error: {
+                    state: false,
+                    message: null
+                },
             };
         case (actionTypes.AUTH_FAIL):
             return {
@@ -217,26 +367,28 @@ const reducer = (state = initialState, action) => {
                             value: '',
                             floatingLabelText: 'Full Name',
                             floatingLabelStyle: {
-                                color: '#ffffff',
+                                color: '#000000',
                                 fontWeight: 'normal'
                             },
                             inputStyle: {
-                                color: '#ffffff',
+                                color: '#000000',
                                 fontWeight: 'normal'
                             },
                             underlineStyle: {
-                                borderColor: "#ffffff"
+                                borderColor: "#000000"
                             },
                             underlineFocusStyle: {
-                                borderColor: "#ffffff"
+                                borderColor: "#000000"
                             }
                         },
                         elementValidation: {
                             validationState: null,
                             validationMessage: '',
                             rules: {
-                                minLength: 4,
-                                minWords: 2
+                                minWords: {
+                                    value: 2,
+                                    message: "Please enter your name and surname"
+                                }
                             }
                         }
                     },
@@ -250,61 +402,69 @@ const reducer = (state = initialState, action) => {
                             value: '',
                             floatingLabelText: 'Email',
                             floatingLabelStyle: {
-                                color: '#ffffff',
+                                color: '#000000',
                                 fontWeight: 'normal'
                             },
                             inputStyle: {
-                                color: '#ffffff',
+                                color: '#000000',
                                 fontWeight: 'normal'
                             },
                             underlineStyle: {
-                                borderColor: "#ffffff"
+                                borderColor: "#000000"
                             },
                             underlineFocusStyle: {
-                                borderColor: "#ffffff"
+                                borderColor: "#000000"
                             }
                         },
                         elementValidation: {
                             validationState: null,
                             validationMessage: '',
                             rules: {
-                                minLength: 4,
-                                email: true
+                                email: {
+                                    message: "Please enter a valid email address"
+                                }
                             }
                         }
                     },
-                    username: {
-                        elementType: 'text',
-                        elementConfig: {
-                            value: '',
-                            placeholder: "Username"
-                        },
-                        elementConfigMobile: {
-                            value: '',
-                            floatingLabelText: 'Username',
-                            floatingLabelStyle: {
-                                color: '#ffffff',
-                                fontWeight: 'normal'
-                            },
-                            inputStyle: {
-                                color: '#ffffff',
-                                fontWeight: 'normal'
-                            },
-                            underlineStyle: {
-                                borderColor: "#ffffff"
-                            },
-                            underlineFocusStyle: {
-                                borderColor: "#ffffff"
-                            }
-                        },
-                        elementValidation: {
-                            validationState: null,
-                            validationMessage: '',
-                            rules: {
-                                minLength: 4
-                            }
-                        }
-                    },
+                    // username: {
+                    //     elementType: 'text',
+                    //     elementConfig: {
+                    //         value: '',
+                    //         placeholder: "Username"
+                    //     },
+                    //     elementConfigMobile: {
+                    //         value: '',
+                    //         floatingLabelText: 'Username',
+                    //         floatingLabelStyle: {
+                    //             color: '#ffffff',
+                    //             fontWeight: 'normal'
+                    //         },
+                    //         inputStyle: {
+                    //             color: '#ffffff',
+                    //             fontWeight: 'normal'
+                    //         },
+                    //         underlineStyle: {
+                    //             borderColor: "#ffffff"
+                    //         },
+                    //         underlineFocusStyle: {
+                    //             borderColor: "#ffffff"
+                    //         }
+                    //     },
+                    //     elementValidation: {
+                    //         validationState: null,
+                    //         validationMessage: '',
+                    //         rules: {
+                    //             minLength: {
+                    //                 value: 5,
+                    //                 message: "Please enter at least 5 characters"
+                    //             },
+                    //             unique: {
+                    //                 value: true,
+                    //                 message: "Username already exists. Please choose a different one."
+                    //             }
+                    //         }
+                    //     }
+                    // },
                     password: {
                         elementType: 'password',
                         elementConfig: {
@@ -315,25 +475,28 @@ const reducer = (state = initialState, action) => {
                             value: '',
                             floatingLabelText: 'Create Password',
                             floatingLabelStyle: {
-                                color: '#ffffff',
+                                color: '#000000',
                                 fontWeight: 'normal'
                             },
                             inputStyle: {
-                                color: '#ffffff',
+                                color: '#000000',
                                 fontWeight: 'normal'
                             },
                             underlineStyle: {
-                                borderColor: "#ffffff"
+                                borderColor: "#000000"
                             },
                             underlineFocusStyle: {
-                                borderColor: "#ffffff"
+                                borderColor: "#000000"
                             }
                         },
                         elementValidation: {
                             validationState: null,
                             validationMessage: '',
                             rules: {
-                                minLength: 4
+                                minLength: {
+                                    value: 6,
+                                    message: `Please enter 6 or more characters`
+                                }
                             }
                         }
                     },
@@ -343,9 +506,22 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 error: {
                     state: false,
-                    message: ''
+                    message: null
                 }
             };
+        case (actionTypes.REGISTER_AS_CONSUMER): {
+            return {
+                ...state,
+                registerAs: "consumer"
+            }
+        }
+        case (actionTypes.REGISTER_AS_STYLIST): {
+            return {
+                ...state,
+                registerAs: "stylist"
+            }
+        }
+
         default:
             return state;
     }

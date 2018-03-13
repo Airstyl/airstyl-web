@@ -22,12 +22,16 @@ class RegisterContainer extends Component {
                             showEmailConfirmationModal={this.props.showEmailConfirmationModal}
                             loading={this.props.loading}
                             error={this.props.error}
+                            registerAs={this.props.registerAs}
                             updateError={this.props.onUpdateError}
                             updateRegisterForm={this.props.onUpdateRegisterForm}
                             updateShowFormModal={this.props.onUpdateShowFormModal}
                             updateShowEmailConfirmationModal={this.props.onUpdateShowEmailConfirmationModal}
-                            submitRegisterForm={this.props.onInitAuthentication}
+                            submitConsumerRegisterForm={this.props.onRegisterConsumer}
+                            submitStylistRegisterForm={this.props.onRegisterStylist}
                             resetPage={this.props.resetPage}
+                            registerAsConsumer={this.props.registerAsConsumer}
+                            registerAsStylist={this.props.registerAsStylist}
                         />
                     </div>
                 </MinWidthTablet>
@@ -39,11 +43,15 @@ class RegisterContainer extends Component {
                             showEmailConfirmationModal={this.props.showEmailConfirmationModal}
                             loading={this.props.loading}
                             error={this.props.error}
+                            registerAs={this.props.registerAs}
                             updateError={this.props.onUpdateError}
                             updateRegisterForm={this.props.onUpdateRegisterForm}
                             updateShowEmailConfirmationModal={this.props.onUpdateShowEmailConfirmationModal}
-                            submitRegisterForm={this.props.onInitAuthentication}
+                            submitConsumerRegisterForm={this.props.onRegisterConsumer}
+                            submitStylistRegisterForm={this.props.onRegisterStylist}
                             resetPage={this.props.resetPage}
+                            registerAsConsumer={this.props.registerAsConsumer}
+                            registerAsStylist={this.props.registerAsStylist}
                         />
                     </main>
                 </Mobile>
@@ -59,6 +67,7 @@ const mapStateToProps = state => {
         showEmailConfirmationModal: state.register.showEmailConfirmationModal,
         loading: state.register.loading,
         error: state.register.error,
+        registerAs: state.register.registerAs,
     }
 };
 
@@ -67,9 +76,12 @@ const mapDispatchToProps = dispatch => {
         onUpdateRegisterForm: (registerForm) => dispatch({type: actionTypes.UPDATE_REGISTER_FORM, payload: registerForm}),
         onUpdateShowFormModal: (showFormModal) => dispatch({type: actionTypes.UPDATE_SHOW_FORM_MODAL, payload: showFormModal}),
         onUpdateShowEmailConfirmationModal: (showEmailConfirmationModal) => dispatch({type: actionTypes.UPDATE_SHOW_EMAIL_CONFIRMATION_MODAL, payload: showEmailConfirmationModal}),
-        onInitAuthentication: (firstname, lastname, email, password, username) => dispatch(actions.Auth(firstname, lastname, email, password, username)),
+        onRegisterConsumer: (firstname, lastname, email, password) => dispatch(actions.RegisterConsumerWithEmailAndPassword(firstname, lastname, email, password)),
+        onRegisterStylist: (firstname, lastname, email, password) => dispatch(actions.RegisterStylistWithEmailAndPassword(firstname, lastname, email, password)),
         onUpdateError: (error) => dispatch({type: actionTypes.UPDATE_ERROR, payload: error}),
-        resetPage: () => dispatch({type: actionTypes.RESET_PAGE})
+        resetPage: () => dispatch({type: actionTypes.RESET_PAGE}),
+        registerAsConsumer: () => dispatch({type: actionTypes.REGISTER_AS_CONSUMER}),
+        registerAsStylist: () => dispatch({type: actionTypes.REGISTER_AS_STYLIST}),
     }
 };
 
