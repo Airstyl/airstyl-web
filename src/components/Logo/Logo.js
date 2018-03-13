@@ -5,7 +5,6 @@ import Mobile from '../Responsive/Mobile';
 
 import DesktopLogo from '../../assets/images/logo.png';
 import TabletLogo from '../../assets/images/logo_tablet.png';
-import MobileLogo from '../../assets/images/logo_mobile.png';
 import './Logo.css';
 
 const logo = (props) => {

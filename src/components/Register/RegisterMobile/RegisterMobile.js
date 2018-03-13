@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {withRouter} from 'react-router-dom';
-import {AppBar, CircularProgress, Dialog, FlatButton, FontIcon, IconButton} from "material-ui";
+import {AppBar, CircularProgress, Dialog, FlatButton, IconButton} from "material-ui";
 import BackArrow from 'material-ui/svg-icons/navigation/arrow-back';
 import validator from 'validator';
 

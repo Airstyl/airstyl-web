@@ -4,7 +4,6 @@ import {Route, Switch} from 'react-router-dom';
 import MinWidthTablet from '../../components/Responsive/MinWidthTablet';
 import Mobile from '../../components/Responsive/Mobile';
 
-import LoginContainer from '../Login/Login.container';
 import IndexContainer from '../Index/Index.container';
 import RegisterContainer from '../Register/Register.container';
 import * as routes from '../../constants/routes';

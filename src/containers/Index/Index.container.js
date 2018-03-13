@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import * as actionTypes from '../../store/actions/actions';
-import * as actions from '../../store/actions/index';
 
-import MinWidthTablet from '../../components/Responsive/MinWidthTablet';
 import Mobile from '../../components/Responsive/Mobile';
 
 import IndexMobile from '../../components/Index/IndexMobile/IndexMobile';
@@ -23,7 +21,9 @@ class IndexContainer extends Component {
     };
 }
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => {
+    return {}
+};
 
 
 const mapDispatchToProps = dispatch => {

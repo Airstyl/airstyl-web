@@ -208,8 +208,8 @@ class Register extends Component {
             <Row id={"register-index"} style={{paddingTop: '40px'}}>
                 <Col lg={4} lgOffset={2} md={6} mdOffset={2}>
                     <Logo id={"logo"}/>
-                    <img src={launchingSoon} style={{height: '50px', display: 'block'}}/>
-                    <img src={findAndBook} style={{height: '25px', display: 'block'}}/>
+                    <img src={launchingSoon} alt={"We're Launching Soon"} style={{height: '50px', display: 'block'}}/>
+                    <img src={findAndBook} alt={"Find and Book a Stylist"} style={{height: '25px', display: 'block'}}/>
                     <hr/>
                     <p>
                         Be the first to hear the news when our app drops!<br />
@@ -244,7 +244,7 @@ class Register extends Component {
                             </Button>
                         </ButtonToolbar>
                     </div>
-                    <img id={"phones"} src={Phones} />
+                    <img id={"phones"} alt={"misc"} src={Phones} />
                 </Col>
             </Row>
         );
@@ -378,9 +378,9 @@ class Register extends Component {
             <div id={"footer"}>
                 <Row>
                     <Col lg={9} lgOffset={1} md={9} mdOffset={1}>
-                        <img src={gse} />
-                        <img src={techNvest} style={{height: '40px'}}/>
-                        <img src={telkom} />
+                        <img alt={"GSE"} src={gse} />
+                        <img alt={"TechNVest"} src={techNvest} style={{height: '40px'}}/>
+                        <img alt={"Telkom"} src={telkom} />
                         <p>&copy; 2018 Airstyl, All Rights Reserved</p>
                     </Col>
                 </Row>

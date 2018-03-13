@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import PasswordField from 'material-ui-password-field'
-import DatePicker from 'material-ui/DatePicker';
 
 const inputMobile = (props) => {
     let inputElement = null;
@@ -44,31 +43,8 @@ const inputMobile = (props) => {
                 />
             );
             break;
-        case ('date'):
-            inputElement = (
-                <DatePicker
-                    fullWidth={true}
-                    textFieldStyle={{
-                        fontSize: '14px',
-                        fontWeight: '300',
-                        fontStyle: 'normal',
-                        height: '72px'
-                    }}
-                    value={props.value}
-                    onChange={props.changed}
-                    {...props.elementConfig}
-                />
-            );
-            break;
-        case ('dropdown'):
-            inputElement = (
-                <select
-                    onChange={props.changed}
-                    {...props.elementConfig}>
-
-                </select>
-            );
-            break;
+        default:
+            return null;
     }
 
     return (
