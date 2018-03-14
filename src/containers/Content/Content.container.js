@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import MinWidthTablet from '../../components/Responsive/MinWidthTablet';
-import Mobile from '../../components/Responsive/Mobile';
-
-import IndexContainer from '../Index/Index.container';
-import RegisterContainer from '../Register/Register.container';
-import * as routes from '../../constants/routes';
+import ComingSoonContainer from '../ComingSoon/ComingSoon.container';
 
 
 class Content extends Component {
@@ -14,18 +9,9 @@ class Content extends Component {
     render () {
         return (
             <div>
-                <MinWidthTablet>
-                    <Switch>
-                        <Route path={routes.index} exact render={() => <RegisterContainer/>} />
-                        <Route path={routes.register} exact render={() => <RegisterContainer/>} />
-                    </Switch>
-                </MinWidthTablet>
-                <Mobile>
-                    <Switch>
-                        <Route path={routes.index} exact render={() => <IndexContainer/>} />
-                        <Route path={routes.register} exact render={() => <RegisterContainer/>} />
-                    </Switch>
-                </Mobile>
+                <Switch>
+                    <Route path={"/"} exact render={() => <ComingSoonContainer/>} />
+                </Switch>
             </div>
         );
     }
