@@ -50,7 +50,7 @@ export const RegisterConsumerWithEmailAndPassword = (firstname, lastname, email,
             })
             .catch(error => {
                 //webpack doesn't see createConsumer as a firebase method, so throws an error. Stupid.
-                if (error.message.includes("createConsumer")) {
+                if (!error.code) {
                     dispatch(AuthSuccess());
                     return;
                 }
@@ -68,11 +68,16 @@ export const RegisterStylistWithEmailAndPassword = (firstname, lastname, email, 
                 users.createStylist(authUser.uid, firstname, lastname, email)
                     .then((authUser) => {
                         dispatch(AuthSuccess());
+                        auth.sendVerificationEmail()
+                            .then((data) => {
+                                console.log(data);
+                            })
                     })
             })
             .catch(error => {
                 //webpack doesn't see createStylist as a firebase method, so throws an error. Stupid.
-                if (error.message.includes("createStylist")) {
+                if (!error.code) {
+                    console.log(error);
                     dispatch(AuthSuccess());
                     return;
                 }

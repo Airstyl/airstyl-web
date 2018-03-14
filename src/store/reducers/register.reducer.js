@@ -2,15 +2,15 @@ import * as actionTypes from '../actions/actions';
 
 const initialState = {
     registerForm: {
-        fullname: {
+        firstname: {
             elementType: 'text',
             elementConfig: {
                 value: '',
-                placeholder: "Full Name"
+                placeholder: "Name"
             },
             elementConfigMobile: {
                 value: '',
-                floatingLabelText: 'Full Name',
+                floatingLabelText: 'Name',
                 floatingLabelStyle: {
                     color: '#000000',
                     fontWeight: 'normal'
@@ -30,9 +30,44 @@ const initialState = {
                 validationState: null,
                 validationMessage: '',
                 rules: {
-                    minWords: {
+                    minLength: {
                         value: 2,
-                        message: "Please enter your name and surname"
+                        message: "Please enter your name"
+                    }
+                }
+            }
+        },
+        lastname: {
+            elementType: 'text',
+            elementConfig: {
+                value: '',
+                placeholder: "Surname"
+            },
+            elementConfigMobile: {
+                value: '',
+                floatingLabelText: 'Surname',
+                floatingLabelStyle: {
+                    color: '#000000',
+                    fontWeight: 'normal'
+                },
+                inputStyle: {
+                    color: '#000000',
+                    fontWeight: 'normal'
+                },
+                underlineStyle: {
+                    borderColor: "#000000"
+                },
+                underlineFocusStyle: {
+                    borderColor: "#000000"
+                }
+            },
+            elementValidation: {
+                validationState: null,
+                validationMessage: '',
+                rules: {
+                    minLength: {
+                        value: 2,
+                        message: "Please enter your surname"
                     }
                 }
             }
@@ -193,15 +228,15 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 registerForm: {
-                    fullname: {
+                    firstname: {
                         elementType: 'text',
                         elementConfig: {
                             value: '',
-                            placeholder: "Full Name"
+                            placeholder: "Name"
                         },
                         elementConfigMobile: {
                             value: '',
-                            floatingLabelText: 'Full Name',
+                            floatingLabelText: 'Name',
                             floatingLabelStyle: {
                                 color: '#000000',
                                 fontWeight: 'normal'
@@ -221,9 +256,44 @@ const reducer = (state = initialState, action) => {
                             validationState: null,
                             validationMessage: '',
                             rules: {
-                                minWords: {
+                                minLength: {
                                     value: 2,
-                                    message: "Please enter your name and surname"
+                                    message: "Please enter your name"
+                                }
+                            }
+                        }
+                    },
+                    lastname: {
+                        elementType: 'text',
+                        elementConfig: {
+                            value: '',
+                            placeholder: "Surname"
+                        },
+                        elementConfigMobile: {
+                            value: '',
+                            floatingLabelText: 'Surname',
+                            floatingLabelStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            inputStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            underlineStyle: {
+                                borderColor: "#000000"
+                            },
+                            underlineFocusStyle: {
+                                borderColor: "#000000"
+                            }
+                        },
+                        elementValidation: {
+                            validationState: null,
+                            validationMessage: '',
+                            rules: {
+                                minLength: {
+                                    value: 2,
+                                    message: "Please enter your surname"
                                 }
                             }
                         }
@@ -335,7 +405,7 @@ const reducer = (state = initialState, action) => {
                                 }
                             }
                         }
-                    },
+                    }
                 },
                 showFormModal: false,
                 showEmailConfirmationModal: true,
@@ -357,15 +427,15 @@ const reducer = (state = initialState, action) => {
         case (actionTypes.RESET_PAGE):
             return {
                 registerForm: {
-                    fullname: {
+                    firstname: {
                         elementType: 'text',
                         elementConfig: {
                             value: '',
-                            placeholder: "Full Name"
+                            placeholder: "Name"
                         },
                         elementConfigMobile: {
                             value: '',
-                            floatingLabelText: 'Full Name',
+                            floatingLabelText: 'Name',
                             floatingLabelStyle: {
                                 color: '#000000',
                                 fontWeight: 'normal'
@@ -385,9 +455,44 @@ const reducer = (state = initialState, action) => {
                             validationState: null,
                             validationMessage: '',
                             rules: {
-                                minWords: {
+                                minLength: {
                                     value: 2,
-                                    message: "Please enter your name and surname"
+                                    message: "Please enter your name"
+                                }
+                            }
+                        }
+                    },
+                    lastname: {
+                        elementType: 'text',
+                        elementConfig: {
+                            value: '',
+                            placeholder: "Surname"
+                        },
+                        elementConfigMobile: {
+                            value: '',
+                            floatingLabelText: 'Surname',
+                            floatingLabelStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            inputStyle: {
+                                color: '#000000',
+                                fontWeight: 'normal'
+                            },
+                            underlineStyle: {
+                                borderColor: "#000000"
+                            },
+                            underlineFocusStyle: {
+                                borderColor: "#000000"
+                            }
+                        },
+                        elementValidation: {
+                            validationState: null,
+                            validationMessage: '',
+                            rules: {
+                                minLength: {
+                                    value: 2,
+                                    message: "Please enter your surname"
                                 }
                             }
                         }
@@ -499,7 +604,7 @@ const reducer = (state = initialState, action) => {
                                 }
                             }
                         }
-                    },
+                    }
                 },
                 showFormModal: false,
                 showEmailConfirmationModal: false,

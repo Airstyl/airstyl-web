@@ -178,10 +178,10 @@ class Register extends Component {
             formData[formElementId] = this.props.registerForm[formElementId].value;
         }
 
-        const firstname = this.props.registerForm.fullname.elementConfig.value.split(' ')[0];
-        const lastname = this.props.registerForm.fullname.elementConfig.value.split(' ')[1];
-        const email = this.props.registerForm.mobileOrEmail.elementConfig.value;
-        const password = this.props.registerForm.password.elementConfig.value;
+        const firstname = this.props.registerForm.firstname.elementConfig.value.trim();
+        const lastname = this.props.registerForm.lastname.elementConfig.value.trim();
+        const email = this.props.registerForm.mobileOrEmail.elementConfig.value.trim();
+        const password = this.props.registerForm.password.elementConfig.value.trim();
 
         this.props.registerAs === 'consumer' ?
             this.props.submitConsumerRegisterForm(firstname, lastname, email, password) :
@@ -208,7 +208,8 @@ class Register extends Component {
             <Row id={"register-index"} style={{paddingTop: '40px'}}>
                 <Col lg={4} lgOffset={2} md={6} mdOffset={2}>
                     <Logo id={"logo"}/>
-                    <img src={launchingSoon} alt={"We're Launching Soon"} style={{height: '50px', display: 'block'}}/>
+                    <h1>We're Launching Soon</h1>
+                    {/*<img src={launchingSoon} alt={"We're Launching Soon"} style={{height: '50px', display: 'block'}}/>*/}
                     <img src={findAndBook} alt={"Find and Book a Stylist"} style={{height: '25px', display: 'block'}}/>
                     <hr/>
                     <p>
@@ -275,11 +276,12 @@ class Register extends Component {
 
         const emailSignUp = (
             <div>
-                {form}
+                <form>
+                    {form}
+                </form>
                 {this.props.loading ? <Spinner color={"#127b7a"}/> : null}
                 {this.props.error.state ? errorAlert : null}
                 <RaisedButton
-                    onClick={this.registerClickHandler}
                     disabled={this.disableButton()}
                     backgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
                     label="Join Now"
@@ -287,6 +289,7 @@ class Register extends Component {
                     labelStyle={{textTransform: 'normal'}}
                     fullWidth
                     style={{marginBottom: '10px'}}
+                    onClick={this.registerClickHandler}
                 />
             </div>
         );

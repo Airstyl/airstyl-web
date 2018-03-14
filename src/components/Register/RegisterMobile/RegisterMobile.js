@@ -127,10 +127,10 @@ class RegisterMobile extends Component {
             formData[formElementId] = this.props.registerForm[formElementId].value;
         }
 
-        const firstname = this.props.registerForm.fullname.elementConfigMobile.value.split(' ')[0];
-        const lastname = this.props.registerForm.fullname.elementConfigMobile.value.split(' ')[1];
-        const email = this.props.registerForm.mobileOrEmail.elementConfigMobile.value;
-        const password = this.props.registerForm.password.elementConfigMobile.value;
+        const firstname = this.props.registerForm.firstname.elementConfigMobile.value.trim();
+        const lastname = this.props.registerForm.lastname.elementConfigMobile.value.trim();
+        const email = this.props.registerForm.mobileOrEmail.elementConfigMobile.value.trim();
+        const password = this.props.registerForm.password.elementConfigMobile.value.trim();
 
         this.props.registerAs === 'consumer' ?
             this.props.submitConsumerRegisterForm(firstname, lastname, email, password) :
@@ -258,27 +258,31 @@ class RegisterMobile extends Component {
                             and get R50 off your first purchase when we launch.
                         </p>
                         <div className={"register-form-mobile"}>
-                            {form}
+                            <form>
+                                {form}
+                                <div id={"register-submit-mobile"}>
+                                    <RaisedButton
+                                        backgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
+                                        disabledBackgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
+                                        label="JOIN NOW"
+                                        fullWidth
+                                        disabled={this.disableButton()}
+                                        onClick={this.registerClickHandler}
+                                        style={{
+                                            height: '36px',
+                                            borderStyle: '5px'
+                                        }}
+                                        labelStyle={{
+                                            margin: '7px 0',
+                                            display: 'block'
+                                        }}
+                                        labelColor={"#FFFFFF"}
+                                    />
+                                </div>
+                            </form>
+
                         </div>
-                    </div>
-                    <div id={"register-submit-mobile"}>
-                        <RaisedButton
-                            backgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
-                            disabledBackgroundColor={this.props.registerAs === 'consumer' ? "#2abcbb" : "#d8245e"}
-                            label="JOIN NOW"
-                            fullWidth
-                            disabled={this.disableButton()}
-                            style={{
-                                height: '36px',
-                                borderStyle: '5px'
-                            }}
-                            labelStyle={{
-                                margin: '7px 0',
-                                display: 'block'
-                            }}
-                            labelColor={"#FFFFFF"}
-                            onClick={this.registerClickHandler}
-                        />
+
                     </div>
                 </div>
             </div>

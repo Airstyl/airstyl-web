@@ -29,7 +29,8 @@ class IndexMobile extends Component {
             <div id={"index-mobile"}>
                 <Logo id={"logo"}/>
                 <br />
-                <img src={launchingSoon} alt={"We're launching soon"} style={{width: '90%', display: 'block', margin: '25px auto'}}/>
+                <h1>We're Launching Soon</h1>
+                {/*<img src={launchingSoon} alt={"We're launching soon"} style={{width: '90%', display: 'block', margin: '25px auto'}}/>*/}
                 <img src={findAndBook} alt={"Find and book a stylist"} style={{width: '80%', display: 'block', margin: 'auto'}}/>
                 <div id={"buttons"}>
                     <Button className={"consumer"} block onClick={this.openConsumerRegister}>
